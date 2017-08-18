@@ -21,6 +21,8 @@ public class TipsFrame extends JFrame {
         JPanel jPanel = new JPanel();
         jPanel.setBackground(new Color(232, 238, 248));
         jPanel.add(jLabel);
+        this.setFocusable(false);
+        this.setFocusableWindowState(false);
         this.getContentPane().add(jPanel);
         this.setUndecorated(true);
         this.setSize(150, 50);
@@ -28,6 +30,15 @@ public class TipsFrame extends JFrame {
         this.setLocation(((int) screenSize.getWidth()) - 150,
             ((int) screenSize.getHeight() - 25 - 50));
         jFrame = this;
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        // this.toBack();
+        // this.transferFocus();
+        // this.setState(Frame.ICONIFIED);
+        // this.transferFocusBackward();
     }
 
     public void finish() {
