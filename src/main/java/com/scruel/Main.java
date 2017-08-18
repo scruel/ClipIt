@@ -1,6 +1,8 @@
 package com.scruel;
 
+import com.scruel.model.TipsFrame;
 import com.scruel.util.IOUnit;
+import com.scruel.util.PropertiesUtil;
 import com.scruel.util.QiNiuUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,13 +24,19 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class Main {
+    private static TipsFrame tipsFrame;
 
     public static void main(String[] args) {
         // String accessKey = args[0];
         // String secretKey = args[1];
         // registerHotKey();
+        if ("false".equals(PropertiesUtil.getProperties().getProperty("windowTips")))
+            tipsFrame = null;
+        else
+            tipsFrame = new TipsFrame();
         checkClipboard();
     }
+
 
     private static void checkClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -43,6 +51,8 @@ public class Main {
         }
 
         try {
+            if (tipsFrame != null)
+                tipsFrame.setVisible(true);
             if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
                 FileListProcesser((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
             }
@@ -52,6 +62,8 @@ public class Main {
             else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
                 HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
+            if (tipsFrame != null)
+                tipsFrame.finish();
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
@@ -63,7 +75,8 @@ public class Main {
         System.out.println(elements.size());
         for (Element element : elements) {
             String filePath = element.attr("src");
-            new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
+            // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
+            QiNiuUtil.fileUpload(new File(filePath));
         }
     }
 
@@ -72,10 +85,18 @@ public class Main {
         QiNiuUtil.uploadByBytes(imgBytes);
     }
 
+
     private static void FileListProcesser(List<File> fileList) {
         for (File file : fileList) {
-            new Thread(() -> QiNiuUtil.fileUpload(file)).start();
+            // new Thread(() -> QiNiuUtil.fileUpload(file)).start();
+            QiNiuUtil.fileUpload(file);
         }
     }
 
+    static class DownloadThread extends Thread {
+        @Override
+        public void run() {
+
+        }
+    }
 }
