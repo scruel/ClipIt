@@ -20,6 +20,7 @@ import java.util.List;
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
  */
+@SuppressWarnings("unchecked")
 public class Main {
 
     public static void main(String[] args) {
@@ -62,22 +63,18 @@ public class Main {
         System.out.println(elements.size());
         for (Element element : elements) {
             String filePath = element.attr("src");
-            new Thread(() -> {
-                QiNiuUtil.fileUpload(new File(filePath));
-            }).start();
+            new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
         }
     }
 
-    public static void ImageProcesser(Image data) {
+    private static void ImageProcesser(Image data) {
         byte[] imgBytes = IOUnit.getImgBytes(data);
         QiNiuUtil.uploadByBytes(imgBytes);
     }
 
     private static void FileListProcesser(List<File> fileList) {
         for (File file : fileList) {
-            new Thread(() -> {
-                QiNiuUtil.fileUpload(file);
-            }).start();
+            new Thread(() -> QiNiuUtil.fileUpload(file)).start();
         }
     }
 

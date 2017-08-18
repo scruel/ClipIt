@@ -10,7 +10,6 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,14 +28,10 @@ public class QiNiuUtil {
     private static String secretKey;
     private static String bucket;
     private static String bucket_domain;
+    private static Properties properties;
 
     static {
-        Properties properties = new Properties();
-        try {
-            properties.load(QiNiuUtil.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        properties = PropertiesUtil.getProperties();
         accessKey = properties.getProperty("accessKey");
         secretKey = properties.getProperty("secretKey");
         bucket = properties.getProperty("bucket");
@@ -108,8 +103,11 @@ public class QiNiuUtil {
     private static void parserQiniuResponseResult(Response response) throws QiniuException {
         //解析上传成功的结果
         DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-        System.out.println(bucket_domain + "/" + putRet.key);
-        ClipboardUtil.setClipBoard(bucket_domain + "/" + putRet.key);
+        String prefix = properties.getProperty("markdownPrefix");
+        String suffix = properties.getProperty("markdownSuffix");
+        String result = prefix + bucket_domain + "/" + putRet.key + suffix;
+        System.out.println(result);
+        ClipboardUtil.setClipBoard(result);
         System.out.println(putRet.hash);
     }
 }

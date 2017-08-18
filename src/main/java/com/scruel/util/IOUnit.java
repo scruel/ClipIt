@@ -14,13 +14,16 @@ import java.io.IOException;
 public class IOUnit {
 
     public static byte[] getImgBytes(Image image) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            ImageIO.write(getBufferedImage(image), "JPEG", baos);
+            if (image instanceof BufferedImage)
+                ImageIO.write((BufferedImage) image, "PNG", out);
+            else
+                ImageIO.write(getBufferedImage(image), "PNG", out);
         } catch (IOException ex) {
             //ignore
         }
-        return baos.toByteArray();
+        return out.toByteArray();
     }
 
     public static BufferedImage getBufferedImage(Image image) {

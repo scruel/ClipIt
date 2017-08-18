@@ -1,5 +1,4 @@
-package com.scruel.util;
-
+import com.scruel.util.IOUnit;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,9 +16,11 @@ import java.util.List;
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
  */
+@SuppressWarnings("unchecked")
 public class Test implements ClipboardOwner {
     private Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     private boolean going; //控制开关
+    private static JFrame jFrame;
 
     /************
      * 测试代码 *
@@ -27,7 +28,8 @@ public class Test implements ClipboardOwner {
     public static void main(String[] args) {
         Test tmp = new Test();
         tmp.begin(); //开始监视
-        new JFrame().setVisible(true);// 软件窗口
+        jFrame = new JFrame();
+        jFrame.setVisible(true);// 软件窗口
     }
 
     /*****************
@@ -73,15 +75,12 @@ public class Test implements ClipboardOwner {
             if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
                 try {
                     String text = (String) clipboard.getData(DataFlavor.stringFlavor);
-                    String clearedText = text;
                     System.out.println("text:" + text);
                     // 存入剪贴板，并注册自己为所有者
                     // 这样下次剪贴板内容改变时，仍然可以触发此事件
-                    StringSelection tmp = new StringSelection(clearedText);
+                    StringSelection tmp = new StringSelection(text);
                     clipboard.setContents(tmp, this);
-                } catch (UnsupportedFlavorException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -90,9 +89,7 @@ public class Test implements ClipboardOwner {
                 try {
                     List<File> text = (List<File>) clipboard.getData(DataFlavor.javaFileListFlavor);
                     System.out.println("file:" + text.get(0).toString());
-                } catch (UnsupportedFlavorException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
 
@@ -102,11 +99,16 @@ public class Test implements ClipboardOwner {
             else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
 
                 try {
-                    Image text = ((Image) clipboard.getData(DataFlavor.imageFlavor));
-                    System.out.println("img:" + text.toString());
-                } catch (UnsupportedFlavorException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                    Image image = ((Image) clipboard.getData(DataFlavor.imageFlavor));
+                    jFrame.setIconImage(image);
+                    // Panel panel = new Panel();
+                    // Graphics g =
+                    // panel.add(text);
+                    // jFrame.getContentPane().add(panel);
+                    byte[] bytes = IOUnit.getImgBytes(image);
+                    System.out.println(new String(bytes));
+                    System.out.println("img:" + image.toString());
+                } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
 
@@ -127,9 +129,7 @@ public class Test implements ClipboardOwner {
                         System.out.println(filePath);
                         System.out.println(element.text());
                     }
-                } catch (UnsupportedFlavorException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
 
