@@ -16,7 +16,7 @@ public class ClipboardUtil {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(text);
         clipboard.setContents(selection, selection);
-        if ("false".equals(PropertiesUtil.getProperties().getProperty("autoPaste")))
+        if (!"false".equals(PropertiesUtil.getProperties().getProperty("autoPaste")))
             paste();
     }
 

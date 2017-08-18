@@ -30,9 +30,7 @@ public class Main {
         // String accessKey = args[0];
         // String secretKey = args[1];
         // registerHotKey();
-        if ("false".equals(PropertiesUtil.getProperties().getProperty("windowTips")))
-            tipsFrame = null;
-        else
+        if (!"false".equals(PropertiesUtil.getProperties().getProperty("windowTips")))
             tipsFrame = new TipsFrame();
         checkClipboard();
     }
