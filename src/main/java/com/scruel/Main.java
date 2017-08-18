@@ -51,8 +51,7 @@ public class Main {
         }
 
         try {
-            if (tipsFrame != null)
-                tipsFrame.setVisible(true);
+            if (tipsFrame != null) tipsFrame.setVisible(true);
             if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
                 FileListProcesser((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
             }
@@ -62,8 +61,7 @@ public class Main {
             else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
                 HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
-            if (tipsFrame != null)
-                tipsFrame.finish();
+            if (tipsFrame != null) tipsFrame.finish();
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
