@@ -35,10 +35,6 @@ public class TipsFrame extends JFrame {
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
-        // this.toBack();
-        // this.transferFocus();
-        // this.setState(Frame.ICONIFIED);
-        // this.transferFocusBackward();
     }
 
     public void finish() {
