@@ -10,11 +10,8 @@ import java.awt.datatransfer.StringSelection;
  * Github : https://github.com/scruel
  */
 public class ClipboardUtil {
-    private static boolean markDown = true;
 
     public static void setClipBoard(String text) {
-        if (markDown)
-            text = "!(image)[" + text + "]";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(text);
         clipboard.setContents(selection, selection);
