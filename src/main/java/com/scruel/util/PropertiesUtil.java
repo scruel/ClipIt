@@ -15,7 +15,7 @@ public class PropertiesUtil {
         Properties properties = new Properties();
         try {
             // properties.load(QiNiuUtil.class.getClassLoader().getResourceAsStream("config.properties"));
-            properties.load(new FileInputStream("config.properties"));
+            properties.load(new FileInputStream("C:\\Users\\scrue\\Desktop\\TOOL\\auto\\AutoHotKey\\clipboardUpload\\config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }

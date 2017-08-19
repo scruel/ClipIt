@@ -34,6 +34,7 @@ public class UploadThread extends Thread {
             }
         } catch (Exception e) {
             //ignore
+            e.printStackTrace();
             if (tipsFrame != null) tipsFrame.notifyUploadFail();
             return;
         }

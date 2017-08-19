@@ -14,3 +14,5 @@
 6. 默认Ctrl + Alt + V 置剪贴板并粘贴获取到的地址（可以对ahk编辑然后自己去用AutoHotKey）
 
 (jar文件请自行打包)
+完整可运行：
+https://pan.baidu.com/s/1mikNAUc

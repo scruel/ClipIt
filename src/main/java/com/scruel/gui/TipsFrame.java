@@ -88,7 +88,7 @@ public class TipsFrame extends JFrame {
         }
         jFrame.setVisible(false);
         this.dispose();
-        if (currNeededUploadSumFail != 0)
+        if (currNeededUploadSumSuccess != 0)
             ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
