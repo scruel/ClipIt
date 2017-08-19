@@ -24,6 +24,7 @@ public class TipsFrame extends JFrame {
         JPanel jPanel = new JPanel();
         jPanel.setBackground(new Color(232, 238, 248));
         jPanel.add(jLabel);
+        this.setAlwaysOnTop(true);
         this.setFocusable(false);
         this.setFocusableWindowState(false);
         this.getContentPane().add(jPanel);
@@ -31,44 +32,41 @@ public class TipsFrame extends JFrame {
         this.setSize(150, 50);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(((int) screenSize.getWidth()) - 150,
-            ((int) screenSize.getHeight() - 25 - 50));
+            ((int) screenSize.getHeight() - 40 - 50));
         jFrame = this;
-    }
-
-    @Override
-    public void setVisible(boolean b) {
-        super.setVisible(b);
     }
 
     private int totalNeededUploadSum = 0;
     private int currNeededUploadSum = 0;
 
     public void setTotalNeededUploadSum(int totalNeededUploadSum) {
-        jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
-        jLabel.repaint();
+        if (totalNeededUploadSum == 0) finish("无内容需要上传！");
+        updateJLable();
         this.totalNeededUploadSum = totalNeededUploadSum;
     }
 
+
+    private void updateJLable() {
+        jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
+        jLabel.repaint();
+    }
+
     public void notifyUpload() {
-        if (totalNeededUploadSum == 0) {
-            finish();
-        }
         currNeededUploadSum++;
-        if (totalNeededUploadSum == currNeededUploadSum) {
+        if (totalNeededUploadSum == 0 || totalNeededUploadSum == currNeededUploadSum) {
             finish();
         }
         else {
-            jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
-            jLabel.repaint();
+            updateJLable();
         }
     }
 
-    public void finish() {
+    public void finish(String s) {
         jLabel.setIcon(null);
-        jLabel.setText("上传复制完成!");
+        jLabel.setText(s);
         jLabel.repaint();
         try {
-            Thread.sleep(1500);
+            Thread.sleep(1200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -76,5 +74,10 @@ public class TipsFrame extends JFrame {
         this.dispose();
         ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
+
+    private void finish() {
+        finish("上传复制完成!");
+    }
+
 
 }
