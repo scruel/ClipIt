@@ -1,5 +1,8 @@
 package com.scruel.model;
 
+import com.scruel.util.ClipboardUtil;
+import com.scruel.util.QiNiuUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -37,6 +40,29 @@ public class TipsFrame extends JFrame {
         super.setVisible(b);
     }
 
+    private int totalNeededUploadSum = 0;
+    private int currNeededUploadSum = 0;
+
+    public void setTotalNeededUploadSum(int totalNeededUploadSum) {
+        jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
+        jLabel.repaint();
+        this.totalNeededUploadSum = totalNeededUploadSum;
+    }
+
+    public void notifyUpload() {
+        if (totalNeededUploadSum == 0) {
+            finish();
+        }
+        currNeededUploadSum++;
+        if (totalNeededUploadSum == currNeededUploadSum) {
+            finish();
+        }
+        else {
+            jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
+            jLabel.repaint();
+        }
+    }
+
     public void finish() {
         jLabel.setIcon(null);
         jLabel.setText("上传复制完成!");
@@ -48,6 +74,7 @@ public class TipsFrame extends JFrame {
         }
         jFrame.setVisible(false);
         this.dispose();
+        ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
 }

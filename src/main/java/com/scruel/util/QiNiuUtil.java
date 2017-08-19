@@ -10,7 +10,10 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -42,26 +45,12 @@ public class QiNiuUtil {
         uploadManager = new UploadManager(cfg);
     }
 
+    private static StringBuffer sb = new StringBuffer();
+
     public static void uploadByBytes(byte[] bytes) {
-        String key = getDateKey() + "image" + ".png";
+        String key = getDateKey() + "clipboard" + ".png";
         try {
             Response response = uploadManager.put(bytes, key, upToken);
-            parserQiniuResponseResult(response);
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            System.err.println(r.toString());
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
-            }
-        }
-    }
-
-    public static void streamUpload(InputStream in) {
-        String key = getDateKey() + "image" + ".png";
-        try {
-            Response response = uploadManager.put(in, key, upToken, null, null);
             parserQiniuResponseResult(response);
         } catch (QiniuException ex) {
             Response r = ex.response;
@@ -92,12 +81,62 @@ public class QiNiuUtil {
         }
     }
 
+    public static void streamUpload(InputStream in) {
+        String key = getDateKey() + "clipboard" + ".png";
+        try {
+            Response response = uploadManager.put(in, key, upToken, null, null);
+            parserQiniuResponseResult(response);
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            System.err.println(r.toString());
+            try {
+                System.err.println(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+    }
+
+    public static void urlImgUpload(URL url) {
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        String key = getDateKey() + "net." + getImgType(url);
+        try {
+            URLConnection conn = url.openConnection();
+            Response response = uploadManager.put(conn.getInputStream(), key, upToken, null, null);
+            parserQiniuResponseResult(response);
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            System.err.println(r.toString());
+            try {
+                System.err.println(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        } catch (IOException e) {
+            //ignore
+        }
+    }
+
     private static String getDateKey() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         String dateStr = simpleDateFormat.format(date);
         Random rm = new Random();
         return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
+    }
+
+    private static String getImgType(URL url) {
+        String urlS = url.toString();
+        if (urlS.contains("jpeg")) return "jpeg";
+        if (urlS.contains("png")) return "png";
+        if (urlS.contains("gif")) return "gif";
+        if (urlS.contains("jpg")) return "jpg";
+        if (urlS.contains("bmp")) return "bmp";
+        return "unknown";
+    }
+
+    public static StringBuffer getSb() {
+        return sb;
     }
 
     private static void parserQiniuResponseResult(Response response) throws QiniuException {
@@ -107,7 +146,7 @@ public class QiNiuUtil {
         String suffix = properties.getProperty("markdownSuffix");
         String result = prefix + bucket_domain + "/" + putRet.key + suffix;
         System.out.println(result);
-        ClipboardUtil.setClipBoard(result);
+        sb.append(result).append("\n");
         System.out.println(putRet.hash);
     }
 }
