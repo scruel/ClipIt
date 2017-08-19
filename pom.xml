@@ -6,7 +6,7 @@
 
     <groupId>com.scruel</groupId>
     <artifactId>clipboardUpload</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2.0-RELEASE</version>
 
 
     <properties>
@@ -54,6 +54,8 @@
                         <configuration>
                             <!-- 默认值为true.注意这个属性,如果你用这个插件来deploy,或者发布到中央仓库，这个属性会缩减你的pom文件,会把你依赖的<dependency>干掉 -->
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>true</minimizeJar>
+                            <finalName>${artifactId}</finalName>
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
