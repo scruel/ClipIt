@@ -1,9 +1,9 @@
 package com.scruel;
 
-import com.scruel.model.TipsFrame;
+import com.scruel.gui.TipsFrame;
 import com.scruel.util.IOUnit;
 import com.scruel.util.PropertiesUtil;
-import com.scruel.util.QiNiuUtil;
+import com.scruel.util.UploadThread;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -78,18 +78,18 @@ public class Main {
             String filePath = element.attr("src");
             // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
             if (filePath.matches("[a-zA-Z]:.*")) {
-                new UploadThread(new File(filePath)).start();
+                new UploadThread(new File(filePath), tipsFrame).start();
             }
             else if (filePath.startsWith("http")) {
                 try {
-                    new UploadThread(new URL(filePath)).start();
+                    new UploadThread(new URL(filePath), tipsFrame).start();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
             }
             else {
                 System.out.println(filePath);
-                if (tipsFrame != null) tipsFrame.notifyUpload();
+                if (tipsFrame != null) tipsFrame.notifyUploadSuccess();
             }
         }
     }
@@ -98,7 +98,7 @@ public class Main {
         byte[] imgBytes = IOUnit.getImgBytes(data);
         if (tipsFrame != null)
             tipsFrame.setTotalNeededUploadSum(1);
-        new UploadThread(imgBytes).start();
+        new UploadThread(imgBytes, tipsFrame).start();
     }
 
 
@@ -107,29 +107,8 @@ public class Main {
             tipsFrame.setTotalNeededUploadSum(fileList.size());
         //TODO ThreadPool
         for (File file : fileList) {
-            new UploadThread(file).start();
+            new UploadThread(file, tipsFrame).start();
         }
     }
 
-    static class UploadThread extends Thread {
-        private Object uploadObj;
-
-        public UploadThread(Object uploadObj) {
-            this.uploadObj = uploadObj;
-        }
-
-        @Override
-        public void run() {
-            if (uploadObj instanceof File) {
-                QiNiuUtil.fileUpload((File) uploadObj);
-            }
-            else if (uploadObj instanceof URL) {
-                QiNiuUtil.urlImgUpload((URL) uploadObj);
-            }
-            else if (uploadObj instanceof byte[]) {
-                QiNiuUtil.uploadByBytes((byte[]) uploadObj);
-            }
-            if (tipsFrame != null) tipsFrame.notifyUpload();
-        }
-    }
 }
