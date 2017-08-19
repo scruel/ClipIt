@@ -12,8 +12,10 @@ import com.qiniu.util.Auth;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -144,7 +146,13 @@ public class QiNiuUtil {
         DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
         String prefix = properties.getProperty("markdownPrefix");
         String suffix = properties.getProperty("markdownSuffix");
-        String result = prefix + bucket_domain + "/" + putRet.key + suffix;
+        String result;
+        try {
+            result = prefix + bucket_domain + "/" + URLDecoder.decode(putRet.key, "utf-8") + suffix;
+        } catch (UnsupportedEncodingException e) {
+            // e.printStackTrace();
+            result = prefix + bucket_domain + "/" + putRet.key + suffix;
+        }
         System.out.println(result);
         sb.append(result).append("\n");
         System.out.println(putRet.hash);

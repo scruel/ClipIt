@@ -1,4 +1,4 @@
-package com.scruel.model;
+package com.scruel.gui;
 
 import com.scruel.util.ClipboardUtil;
 import com.scruel.util.QiNiuUtil;
@@ -37,23 +37,34 @@ public class TipsFrame extends JFrame {
     }
 
     private int totalNeededUploadSum = 0;
-    private int currNeededUploadSum = 0;
+    private int currNeededUploadSumSuccess = 0;
+    private int currNeededUploadSumFail = 0;
 
     public void setTotalNeededUploadSum(int totalNeededUploadSum) {
-        if (totalNeededUploadSum == 0) finish("无内容需要上传！");
-        updateJLable();
+        if (totalNeededUploadSum == 0) finish("无内容需处理！");
         this.totalNeededUploadSum = totalNeededUploadSum;
+        updateJLable();
     }
 
 
     private void updateJLable() {
-        jLabel.setText("上传中…… " + currNeededUploadSum + "/" + totalNeededUploadSum);
+        jLabel.setText("上传中…… " + (currNeededUploadSumFail + currNeededUploadSumSuccess) + "/" + totalNeededUploadSum);
         jLabel.repaint();
     }
 
-    public void notifyUpload() {
-        currNeededUploadSum++;
-        if (totalNeededUploadSum == 0 || totalNeededUploadSum == currNeededUploadSum) {
+    public void notifyUploadSuccess() {
+        currNeededUploadSumSuccess++;
+        if (totalNeededUploadSum == 0 || totalNeededUploadSum == (currNeededUploadSumFail + currNeededUploadSumSuccess)) {
+            finish();
+        }
+        else {
+            updateJLable();
+        }
+    }
+
+    public void notifyUploadFail() {
+        currNeededUploadSumFail++;
+        if (totalNeededUploadSum == 0 || totalNeededUploadSum == (currNeededUploadSumFail + currNeededUploadSumSuccess)) {
             finish();
         }
         else {
@@ -66,17 +77,27 @@ public class TipsFrame extends JFrame {
         jLabel.setText(s);
         jLabel.repaint();
         try {
-            Thread.sleep(1200);
+            if (currNeededUploadSumFail != 0) {
+                Thread.sleep(2500);
+            }
+            else {
+                Thread.sleep(1200);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         jFrame.setVisible(false);
         this.dispose();
-        ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
+        if (currNeededUploadSumFail != 0)
+            ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
     private void finish() {
-        finish("上传复制完成!");
+        String failstr = "";
+        if (currNeededUploadSumFail != 0) {
+            failstr = "失败:" + currNeededUploadSumFail;
+        }
+        finish("上传复制完成! " + failstr);
     }
 
 
