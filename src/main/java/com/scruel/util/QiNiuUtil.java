@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -148,7 +148,7 @@ public class QiNiuUtil {
         String suffix = properties.getProperty("markdownSuffix");
         String result;
         try {
-            result = prefix + bucket_domain + "/" + URLDecoder.decode(putRet.key, "utf-8") + suffix;
+            result = prefix + bucket_domain + "/" + URLEncoder.encode(putRet.key, "utf-8") + suffix;
         } catch (UnsupportedEncodingException e) {
             // e.printStackTrace();
             result = prefix + bucket_domain + "/" + putRet.key + suffix;
