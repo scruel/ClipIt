@@ -61,7 +61,7 @@ public class Main {
                 HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
             else {
-                if (tipsFrame != null) tipsFrame.finish();
+                if (tipsFrame != null) tipsFrame.finish("无内容需要上传！");
             }
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
