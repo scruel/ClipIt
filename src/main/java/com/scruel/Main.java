@@ -60,7 +60,9 @@ public class Main {
             else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
                 HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
-            // if (tipsFrame != null) tipsFrame.finish();
+            else {
+                if (tipsFrame != null) tipsFrame.finish();
+            }
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
