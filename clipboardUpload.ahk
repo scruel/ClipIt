@@ -4,8 +4,5 @@ by scruel
 */
 
 ^!V::
-	RunWait, %comspec% /c "java -jar clipboardUpload-1.0-SNAPSHOT.jar" ,, hide
+	RunWait, %comspec% /c "java -jar clipboardUpload.jar" ,, hide
 return
-
-
-
