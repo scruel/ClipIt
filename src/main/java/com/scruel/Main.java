@@ -15,6 +15,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -34,7 +36,6 @@ public class Main {
             tipsFrame = new TipsFrame();
         checkClipboard();
     }
-
 
     private static void checkClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -59,7 +60,7 @@ public class Main {
             else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
                 HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
-            if (tipsFrame != null) tipsFrame.finish();
+            // if (tipsFrame != null) tipsFrame.finish();
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
@@ -69,30 +70,64 @@ public class Main {
         Document doc = Jsoup.parse(data);
         Elements elements = doc.select("img");
         System.out.println(elements.size());
+        if (tipsFrame != null)
+            tipsFrame.setTotalNeededUploadSum(elements.size());
         for (Element element : elements) {
             String filePath = element.attr("src");
             // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
-            QiNiuUtil.fileUpload(new File(filePath));
+            if (filePath.matches("[a-zA-Z]:.*")) {
+                new UploadThread(new File(filePath)).start();
+            }
+            else if (filePath.startsWith("http")) {
+                try {
+                    new UploadThread(new URL(filePath)).start();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println(filePath);
+                if (tipsFrame != null) tipsFrame.notifyUpload();
+            }
         }
     }
 
     private static void ImageProcesser(Image data) {
         byte[] imgBytes = IOUnit.getImgBytes(data);
-        QiNiuUtil.uploadByBytes(imgBytes);
+        if (tipsFrame != null)
+            tipsFrame.setTotalNeededUploadSum(1);
+        new UploadThread(imgBytes).start();
     }
 
 
     private static void FileListProcesser(List<File> fileList) {
+        if (tipsFrame != null)
+            tipsFrame.setTotalNeededUploadSum(fileList.size());
+        //TODO ThreadPool
         for (File file : fileList) {
-            // new Thread(() -> QiNiuUtil.fileUpload(file)).start();
-            QiNiuUtil.fileUpload(file);
+            new UploadThread(file).start();
         }
     }
 
-    static class DownloadThread extends Thread {
+    static class UploadThread extends Thread {
+        private Object uploadObj;
+
+        public UploadThread(Object uploadObj) {
+            this.uploadObj = uploadObj;
+        }
+
         @Override
         public void run() {
-
+            if (uploadObj instanceof File) {
+                QiNiuUtil.fileUpload((File) uploadObj);
+            }
+            else if (uploadObj instanceof URL) {
+                QiNiuUtil.urlImgUpload((URL) uploadObj);
+            }
+            else if (uploadObj instanceof byte[]) {
+                QiNiuUtil.uploadByBytes((byte[]) uploadObj);
+            }
+            if (tipsFrame != null) tipsFrame.notifyUpload();
         }
     }
 }

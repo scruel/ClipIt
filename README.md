@@ -12,3 +12,5 @@
 4. 运行clipboardUpload.exe
 5. 复制一张图片
 6. 默认Ctrl + Alt + V 置剪贴板并粘贴获取到的地址（可以对ahk编辑然后自己去用AutoHotKey）
+
+(jar文件请自行打包为 clipboardUpload-1.0-SNAPSHOT.jar)
