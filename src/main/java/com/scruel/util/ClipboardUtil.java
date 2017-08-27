@@ -2,6 +2,7 @@ package com.scruel.util;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 
@@ -11,12 +12,11 @@ import java.awt.event.KeyEvent;
  * Github : https://github.com/scruel
  */
 public class ClipboardUtil {
-
     public static void setClipBoard(String text) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(text);
         clipboard.setContents(selection, selection);
-        if (!"false".equals(PropertiesUtil.getProperties().getProperty("autoPaste")))
+        if (!"false".equals(PropertiesUtil.getProperties().getProperty("auto.paste")))
             paste();
     }
 
@@ -31,5 +31,19 @@ public class ClipboardUtil {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Clipboard getClipboard() {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        while (true) {
+            Throwable throwable = null;
+            try {
+                clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor);
+            } catch (IllegalStateException e) {
+                throwable = e;
+            }
+            if (throwable == null) break;
+        }
+        return clipboard;
     }
 }

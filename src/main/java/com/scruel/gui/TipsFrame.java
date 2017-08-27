@@ -1,8 +1,5 @@
 package com.scruel.gui;
 
-import com.scruel.util.ClipboardUtil;
-import com.scruel.util.QiNiuUtil;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,11 +11,13 @@ import java.awt.*;
 public class TipsFrame extends JFrame {
     private static JLabel jLabel;
     private static JFrame jFrame;
+    private String labTitle = "";
+    private int totalNeededSum = 0;
+
 
     public TipsFrame() {
         super();
         jLabel = new JLabel();
-        jLabel.setText("上传中……");
         Icon icon = new ImageIcon(TipsFrame.class.getClassLoader().getResource("l.gif"));
         jLabel.setIcon(icon);
         JPanel jPanel = new JPanel();
@@ -36,25 +35,41 @@ public class TipsFrame extends JFrame {
         jFrame = this;
     }
 
-    private int totalNeededUploadSum = 0;
-    private int currNeededUploadSumSuccess = 0;
-    private int currNeededUploadSumFail = 0;
+    private int currSuccessSum = 0;
+    private int currFailSum = 0;
 
-    public void setTotalNeededUploadSum(int totalNeededUploadSum) {
-        if (totalNeededUploadSum == 0) finish("无内容需处理！");
-        this.totalNeededUploadSum = totalNeededUploadSum;
-        updateJLable();
-    }
-
-
-    private void updateJLable() {
-        jLabel.setText("上传中…… " + (currNeededUploadSumFail + currNeededUploadSumSuccess) + "/" + totalNeededUploadSum);
+    public void initJlabelTitle(String labTitle) {
+        this.labTitle = labTitle;
+        jLabel.setText(labTitle + "…… ");
         jLabel.repaint();
     }
 
-    public void notifyUploadSuccess() {
-        currNeededUploadSumSuccess++;
-        if (totalNeededUploadSum == 0 || totalNeededUploadSum == (currNeededUploadSumFail + currNeededUploadSumSuccess)) {
+    private void updateJLable() {
+        jLabel.setText(labTitle + "…… " + (currFailSum + currSuccessSum) + "/" + totalNeededSum);
+        jLabel.repaint();
+    }
+
+    public int getTotalNeededSum() {
+        return totalNeededSum;
+    }
+
+    public void setTotalNeededSum(int totalNeededUploadSum) {
+        if (totalNeededUploadSum == 0) finish("无内容需处理！");
+        this.totalNeededSum = totalNeededUploadSum;
+        updateJLable();
+    }
+
+    public int getCurrSuccessSum() {
+        return currSuccessSum;
+    }
+
+    public int getCurrFailSum() {
+        return currFailSum;
+    }
+
+    public void notifySuccess() {
+        currSuccessSum++;
+        if (totalNeededSum == 0 || totalNeededSum == (currFailSum + currSuccessSum)) {
             finish();
         }
         else {
@@ -62,9 +77,9 @@ public class TipsFrame extends JFrame {
         }
     }
 
-    public void notifyUploadFail() {
-        currNeededUploadSumFail++;
-        if (totalNeededUploadSum == 0 || totalNeededUploadSum == (currNeededUploadSumFail + currNeededUploadSumSuccess)) {
+    public void notifyFail() {
+        currFailSum++;
+        if (totalNeededSum == 0 || totalNeededSum == (currFailSum + currSuccessSum)) {
             finish();
         }
         else {
@@ -75,9 +90,12 @@ public class TipsFrame extends JFrame {
     public void finish(String s) {
         jLabel.setIcon(null);
         jLabel.setText(s);
+        if (currFailSum != 0) {
+            jLabel.setForeground(Color.red);
+        }
         jLabel.repaint();
         try {
-            if (currNeededUploadSumFail != 0) {
+            if (currFailSum != 0) {
                 Thread.sleep(2500);
             }
             else {
@@ -88,16 +106,14 @@ public class TipsFrame extends JFrame {
         }
         jFrame.setVisible(false);
         this.dispose();
-        if (currNeededUploadSumSuccess != 0)
-            ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
-    private void finish() {
+    public void finish() {
         String failstr = "";
-        if (currNeededUploadSumFail != 0) {
-            failstr = "失败:" + currNeededUploadSumFail;
+        if (currFailSum != 0) {
+            failstr = "失败:" + currFailSum;
         }
-        finish("上传复制完成! " + failstr);
+        finish("完成! " + failstr);
     }
 
 

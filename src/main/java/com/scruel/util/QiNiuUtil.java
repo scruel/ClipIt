@@ -32,15 +32,15 @@ public class QiNiuUtil {
     private static String accessKey;
     private static String secretKey;
     private static String bucket;
-    private static String bucket_domain;
+    private static String bucketDomain;
     private static Properties properties;
 
     static {
         properties = PropertiesUtil.getProperties();
-        accessKey = properties.getProperty("accessKey");
-        secretKey = properties.getProperty("secretKey");
+        accessKey = properties.getProperty("access.key");
+        secretKey = properties.getProperty("secret.key");
         bucket = properties.getProperty("bucket");
-        bucket_domain = properties.getProperty("bucket_domain");
+        bucketDomain = properties.getProperty("bucket.domain");
         Auth auth = Auth.create(accessKey, secretKey);
         upToken = auth.uploadToken(bucket);
         Configuration cfg = new Configuration(Zone.autoZone());
@@ -144,17 +144,22 @@ public class QiNiuUtil {
     private static void parserQiniuResponseResult(Response response) throws QiniuException {
         //解析上传成功的结果
         DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-        String prefix = properties.getProperty("markdownPrefix");
-        String suffix = properties.getProperty("markdownSuffix");
+        String prefix = properties.getProperty("markdown.prefix");
+        String suffix = properties.getProperty("markdown.suffix");
         String result;
+        String key = putRet.key;
+        String fileName = key.substring(key.indexOf("_", key.indexOf("_") + 1) + 1);
+        if (!fileName.startsWith("clipboard")) {
+            prefix = prefix.replace("image", fileName);
+        }
         try {
-            result = prefix + bucket_domain + "/" + URLEncoder.encode(putRet.key, "utf-8") + suffix;
+            result = String.format("%s%s%s", prefix, bucketDomain + "/" + URLEncoder.encode(key, "utf-8").replace("+", "%20"), suffix);
+
         } catch (UnsupportedEncodingException e) {
             // e.printStackTrace();
-            result = prefix + bucket_domain + "/" + putRet.key + suffix;
+            result = String.format("%s%s%s", prefix, bucketDomain + "/" + key, suffix);
         }
         System.out.println(result);
         sb.append(result).append("\n");
-        System.out.println(putRet.hash);
     }
 }
