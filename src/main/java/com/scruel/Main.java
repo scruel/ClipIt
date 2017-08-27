@@ -1,23 +1,12 @@
 package com.scruel;
 
 import com.scruel.gui.TipsFrame;
-import com.scruel.util.IOUnit;
+import com.scruel.handler.BaseProcesser;
+import com.scruel.handler.SendToKindleProcesser;
+import com.scruel.handler.UploadProcesser;
 import com.scruel.util.PropertiesUtil;
-import com.scruel.util.UploadThread;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  * Created by Scruel on 2017/8/18.
@@ -29,86 +18,42 @@ public class Main {
     private static TipsFrame tipsFrame;
 
     public static void main(String[] args) {
-        // String accessKey = args[0];
-        // String secretKey = args[1];
-        // registerHotKey();
-        if (!"false".equals(PropertiesUtil.getProperties().getProperty("windowTips")))
+        HashSet<String> optionsSet = new HashSet<String>();
+        String command = null;
+        for (String arg : args) {
+            if (arg.startsWith("-"))
+                optionsSet.add(arg);
+            else if (command == null)
+                command = arg;
+            else
+                printUsage();
+        }
+
+        if (command == null || optionsSet.contains("-h") || optionsSet.contains("--help"))
+            printUsage();
+
+        if (!"false".equals(PropertiesUtil.getProperties().getProperty("window.tips")))
             tipsFrame = new TipsFrame();
-        checkClipboard();
-    }
 
-    private static void checkClipboard() {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        while (true) {
-            Throwable throwable = null;
-            try {
-                clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor);
-            } catch (IllegalStateException e) {
-                throwable = e;
-            }
-            if (throwable == null) break;
+        BaseProcesser handler = null;
+        if ("upload".equals(command)) {
+            handler = new UploadProcesser(tipsFrame);
         }
-
-        try {
-            if (tipsFrame != null) tipsFrame.setVisible(true);
-            if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
-                FileListProcesser((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
-            }
-            else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
-                ImageProcesser((Image) clipboard.getData(DataFlavor.imageFlavor));
-            }
-            else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
-                HTMLProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
-            }
-            else {
-                if (tipsFrame != null) tipsFrame.finish("无内容需要上传！");
-            }
-        } catch (UnsupportedFlavorException | IOException e) {
-            e.printStackTrace();
+        else if ("sendtokindle".equals(command)) {
+            handler = new SendToKindleProcesser(tipsFrame);
         }
+        if (handler == null)
+            printUsage();
+        else
+            handler.process();
     }
 
-    private static void HTMLProcesser(String data) {
-        Document doc = Jsoup.parse(data);
-        Elements elements = doc.select("img");
-        System.out.println(elements.size());
-        if (tipsFrame != null)
-            tipsFrame.setTotalNeededUploadSum(elements.size());
-        for (Element element : elements) {
-            String filePath = element.attr("src");
-            // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
-            if (filePath.matches("[a-zA-Z]:.*")) {
-                new UploadThread(new File(filePath), tipsFrame).start();
-            }
-            else if (filePath.startsWith("http")) {
-                try {
-                    new UploadThread(new URL(filePath), tipsFrame).start();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                System.out.println(filePath);
-                if (tipsFrame != null) tipsFrame.notifyUploadSuccess();
-            }
-        }
+    private static void printUsage() {
+        System.err.println("Usage: clipBoard command");
+        System.err.println("  -h\tthis message");
+        System.err.println("  comment:\t");
+        System.err.println("          sendtokindle auto send file to email");
+        System.err.println("          upload auto upload file to cloud");
+        System.exit(0);
     }
-
-    private static void ImageProcesser(Image data) {
-        byte[] imgBytes = IOUnit.getImgBytes(data);
-        if (tipsFrame != null)
-            tipsFrame.setTotalNeededUploadSum(1);
-        new UploadThread(imgBytes, tipsFrame).start();
-    }
-
-
-    private static void FileListProcesser(List<File> fileList) {
-        if (tipsFrame != null)
-            tipsFrame.setTotalNeededUploadSum(fileList.size());
-        //TODO ThreadPool
-        for (File file : fileList) {
-            new UploadThread(file, tipsFrame).start();
-        }
-    }
-
 }

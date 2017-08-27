@@ -10,15 +10,23 @@ import java.util.Properties;
  * Github : https://github.com/scruel
  */
 public class PropertiesUtil {
+    private static final Properties properties = new Properties();
+    private static boolean debug = false;
 
     public static Properties getProperties() {
-        Properties properties = new Properties();
         try {
             // properties.load(QiNiuUtil.class.getClassLoader().getResourceAsStream("config.properties"));
-            properties.load(new FileInputStream("config.properties"));
+            if (debug)
+                properties.load(new FileInputStream("C:\\Users\\scrue\\Desktop\\TOOL\\auto\\clipboardUpload\\config.properties"));
+            else
+                properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return properties;
+    }
+
+    public static boolean isDebug() {
+        return debug;
     }
 }

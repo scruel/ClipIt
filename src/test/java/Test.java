@@ -1,4 +1,4 @@
-import com.scruel.util.IOUnit;
+import com.scruel.util.IOUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -105,7 +105,7 @@ public class Test implements ClipboardOwner {
                     // Graphics g =
                     // panel.add(text);
                     // jFrame.getContentPane().add(panel);
-                    byte[] bytes = IOUnit.getImgBytes(image);
+                    byte[] bytes = IOUtil.getImgBytes(image);
                     System.out.println(new String(bytes));
                     System.out.println("img:" + image.toString());
                 } catch (UnsupportedFlavorException | IOException e) {
