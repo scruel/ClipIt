@@ -2,9 +2,7 @@ package com.scruel.handler;
 
 import com.scruel.gui.TipsFrame;
 import com.scruel.thread.UploadThread;
-import com.scruel.util.ClipboardUtil;
 import com.scruel.util.IOUtil;
-import com.scruel.util.QiNiuUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,12 +25,6 @@ public class UploadProcesser extends BaseProcesser {
     public UploadProcesser(TipsFrame tipsFrame) {
         super(tipsFrame, UploadThread.class);
         tipsFrame.initJlabelTitle("uploading");
-    }
-
-    @Override
-    public void process() {
-        if (_process())
-            ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
     @Override

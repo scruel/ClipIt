@@ -1,5 +1,8 @@
 package com.scruel.gui;
 
+import com.scruel.util.ClipboardUtil;
+import com.scruel.util.QiNiuUtil;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -106,6 +109,8 @@ public class TipsFrame extends JFrame {
         }
         jFrame.setVisible(false);
         this.dispose();
+        if ("uploading".equals(labTitle))
+            ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
 
     public void finish() {
