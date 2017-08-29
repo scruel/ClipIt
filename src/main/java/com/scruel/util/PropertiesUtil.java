@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
     private static final Properties properties = new Properties();
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static Properties getProperties() {
         try {
