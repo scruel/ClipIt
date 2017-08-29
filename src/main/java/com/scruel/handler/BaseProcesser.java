@@ -20,21 +20,15 @@ public abstract class BaseProcesser {
     private TipsFrame tipsFrame;
     private Class<?> threadClazz;
 
-    public BaseProcesser(TipsFrame tipsFrame, Class<?> threadClazz) {
+    protected BaseProcesser(TipsFrame tipsFrame, Class<?> threadClazz) {
         this.tipsFrame = tipsFrame;
         this.threadClazz = threadClazz;
     }
 
     /**
-     * _process为默认的处理方法，也可以自定义处理方法。
-     */
-    public abstract void process();
-
-    /**
      * @return true则为发生了上传并且所有上传全部成功
      */
-    public boolean _process() {
-        boolean res = false;
+    public void process() {
         Clipboard clipboard = ClipboardUtil.getClipboard();
         try {
             if (tipsFrame != null) tipsFrame.setVisible(true);
@@ -50,15 +44,11 @@ public abstract class BaseProcesser {
             else {
                 if (tipsFrame != null) tipsFrame.finish("无内容需要上传！");
             }
-            if (tipsFrame != null && tipsFrame.getCurrFailSum() == 0 && tipsFrame.getTotalNeededSum() != 0) {
-                res = true;
-            }
         } catch (Exception e) {
             // e.printStackTrace();
             System.err.println(e);
         }
         if (tipsFrame.getTotalNeededSum() == 0) tipsFrame.finish();
-        return res;
     }
 
     public TipsFrame getTipsFrame() {

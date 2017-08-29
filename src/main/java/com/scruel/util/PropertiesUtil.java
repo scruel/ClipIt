@@ -11,13 +11,13 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
     private static final Properties properties = new Properties();
-    private static boolean debug = false;
+    private static boolean debug = true;
 
     public static Properties getProperties() {
         try {
             // properties.load(QiNiuUtil.class.getClassLoader().getResourceAsStream("config.properties"));
             if (debug)
-                properties.load(new FileInputStream("C:\\Users\\scrue\\Desktop\\TOOL\\auto\\clipboardUpload\\config.properties"));
+                properties.load(new FileInputStream("C:\\Users\\scrue\\Desktop\\TOOL\\auto\\clipIt\\config.properties"));
             else
                 properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {

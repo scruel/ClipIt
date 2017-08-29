@@ -1,5 +1,5 @@
 ﻿/*
-github: https://github.com/scruel/markdownClipUpload
+github: https://github.com/scruel/ClipIt
 by scruel
 */
 

@@ -39,11 +39,6 @@ public class SendToKindleProcesser extends BaseProcesser {
                 notifyFramSuccess();
         }
     }
-
-    @Override
-    public void process() {
-        _process();
-    }
 }
 
 
