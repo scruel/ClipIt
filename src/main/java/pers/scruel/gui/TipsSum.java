@@ -1,4 +1,4 @@
-package com.scruel.gui;
+package pers.scruel.gui;
 
 /**
  * Created by Scruel on 2017/8/29.
