@@ -1,5 +1,5 @@
-import com.scruel.util.PropertiesUtil;
 import org.junit.Test;
+import pers.scruel.util.PropertiesUtil;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,10 +11,10 @@ import static org.junit.Assert.assertEquals;
 
 public class DebugTest {
 
-    @Test
-    public void produced() {
-        assertEquals(false, PropertiesUtil.isDebug());
-    }
+  @Test
+  public void produced() {
+    assertEquals(false, PropertiesUtil.isDebug());
+  }
 
 
 }
