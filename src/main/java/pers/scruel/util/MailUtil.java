@@ -3,18 +3,10 @@ package pers.scruel.util;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimeUtility;
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.io.File;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
@@ -36,7 +28,7 @@ public class MailUtil {
   /*
    * 初始化方法
    */
-  public MailUtil(boolean debug) throws GeneralSecurityException {
+  public MailUtil(boolean debug) throws GeneralSecurityException, IOException {
     //解决中文乱码的终极方案
     System.setProperty("mail.mime.splitlongparameters", "false");
     Properties properties = PropertiesUtil.getProperties();
