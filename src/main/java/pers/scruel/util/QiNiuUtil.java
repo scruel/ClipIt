@@ -37,7 +37,12 @@ public class QiNiuUtil {
   private static StringBuffer sb = new StringBuffer();
 
   static {
-    properties = PropertiesUtil.getProperties();
+    try {
+      properties = PropertiesUtil.getProperties();
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(0);
+    }
     accessKey = properties.getProperty("access.key");
     secretKey = properties.getProperty("secret.key");
     bucket = properties.getProperty("bucket");

@@ -6,6 +6,7 @@ import pers.scruel.handler.SendToKindleProcesser;
 import pers.scruel.handler.UploadProcesser;
 import pers.scruel.util.PropertiesUtil;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 /**
@@ -36,8 +37,14 @@ public class Main {
       printUsage();
     }
 
-    if (!"false".equals(PropertiesUtil.getProperties().getProperty("window.tips"))) {
+    try {
+      if (!"false".equals(PropertiesUtil.getProperties().getProperty("window.tips"))) {
+        tipsFrame = new TipsFrame();
+      }
+    } catch (IOException ignore) {
       tipsFrame = new TipsFrame();
+      tipsFrame.setVisible(true);
+      tipsFrame.finish("配置加载失败！", 5000, true);
     }
 
     BaseProcesser handler = null;

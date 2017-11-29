@@ -5,9 +5,7 @@ import pers.scruel.util.ClipboardUtil;
 import pers.scruel.util.QiNiuUtil;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 
 /**
  * Created by Scruel on 2017/8/19.
@@ -94,15 +92,19 @@ public class TipsFrame extends JFrame {
   }
 
   public void finish(String s) {
+    finish(s, 2500, false);
+  }
+
+  public void finish(String s, long failSleepTime, boolean isFaild) {
     jLabel.setIcon(null);
     jLabel.setText(s);
-    if (currFailSum != 0) {
+    if (currFailSum != 0 || isFaild) {
       jLabel.setForeground(Color.red);
     }
     jLabel.repaint();
     try {
       if (currFailSum != 0) {
-        Thread.sleep(2500);
+        Thread.sleep(failSleepTime);
       }
       else {
         Thread.sleep(1200);
@@ -112,9 +114,10 @@ public class TipsFrame extends JFrame {
     }
     jFrame.setVisible(false);
     this.dispose();
-    if ("uploading".equals(labTitle)) {
+    if (currSuccessSum > 0) {
       ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
     }
+    System.exit(0);
   }
 
   public void finish() {
