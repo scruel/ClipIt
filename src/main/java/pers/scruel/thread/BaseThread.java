@@ -1,7 +1,7 @@
 package pers.scruel.thread;
 
 
-import pers.scruel.gui.TipsFrame;
+import pers.scruel.listener.BaseAction;
 
 import java.io.File;
 import java.net.URL;
@@ -12,12 +12,12 @@ import java.net.URL;
  * Github : https://github.com/scruel
  */
 public abstract class BaseThread extends Thread {
-  private Object uploadObj;
-  private TipsFrame tipsFrame;
+  protected Object uploadObj;
+  protected BaseAction action;
 
-  public BaseThread(Object uploadObj, TipsFrame tipsFrame) {
+  public BaseThread(Object uploadObj, BaseAction action) {
     this.uploadObj = uploadObj;
-    this.tipsFrame = tipsFrame;
+    this.action = action;
   }
 
   @Override
@@ -36,17 +36,12 @@ public abstract class BaseThread extends Thread {
       else if (uploadObj instanceof byte[]) {
         runBytes((byte[]) uploadObj);
       }
-    } catch (Exception e) {
-      //ignore
-      e.printStackTrace();
-      if (tipsFrame != null) {
-        tipsFrame.notifyFail();
-      }
+    } catch (Exception ignore) {
+      // e.printStackTrace();
+      action.actionFailed();
       return;
     }
-    if (tipsFrame != null) {
-      tipsFrame.notifySuccess();
-    }
+    action.actionSucceed();
   }
 
   /**

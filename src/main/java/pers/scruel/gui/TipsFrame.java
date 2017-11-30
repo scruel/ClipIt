@@ -1,9 +1,6 @@
 package pers.scruel.gui;
 
 
-import pers.scruel.util.ClipboardUtil;
-import pers.scruel.util.QiNiuUtil;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,11 +11,7 @@ import java.awt.*;
  */
 public class TipsFrame extends JFrame {
   private static JLabel jLabel;
-  private static JFrame jFrame;
   private String labTitle = "";
-  private int totalNeededSum = 0;
-  private int currSuccessSum = 0;
-  private int currFailSum = 0;
 
   public TipsFrame() {
     super();
@@ -37,7 +30,6 @@ public class TipsFrame extends JFrame {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     this.setLocation(((int) screenSize.getWidth()) - 150,
         ((int) screenSize.getHeight() - 40 - 50));
-    jFrame = this;
   }
 
   public void initJlabelTitle(String labTitle) {
@@ -46,87 +38,29 @@ public class TipsFrame extends JFrame {
     jLabel.repaint();
   }
 
-  private void updateJLable() {
-    jLabel.setText(labTitle + "…… " + (currFailSum + currSuccessSum) + "/" + totalNeededSum);
+  public void updateJLable(int current, int total) {
+    jLabel.setText(String.format("%s…… %d/%d", labTitle, current, total));
     jLabel.repaint();
-  }
-
-  public int getTotalNeededSum() {
-    return totalNeededSum;
-  }
-
-  public void setTotalNeededSum(int totalNeededUploadSum) {
-    if (totalNeededUploadSum == 0) {
-      finish("无内容需处理！");
-    }
-    this.totalNeededSum = totalNeededUploadSum;
-    updateJLable();
-  }
-
-  public int getCurrSuccessSum() {
-    return currSuccessSum;
-  }
-
-  public int getCurrFailSum() {
-    return currFailSum;
-  }
-
-  public void notifySuccess() {
-    currSuccessSum++;
-    if (totalNeededSum == 0 || totalNeededSum == (currFailSum + currSuccessSum)) {
-      finish();
-    }
-    else {
-      updateJLable();
-    }
-  }
-
-  public void notifyFail() {
-    currFailSum++;
-    if (totalNeededSum == 0 || totalNeededSum == (currFailSum + currSuccessSum)) {
-      finish();
-    }
-    else {
-      updateJLable();
-    }
   }
 
   public void finish(String s) {
     finish(s, 2500, false);
   }
 
-  public void finish(String s, long failSleepTime, boolean isFaild) {
+  public void finish(String s, long millis, boolean failed) {
     jLabel.setIcon(null);
     jLabel.setText(s);
-    if (currFailSum != 0 || isFaild) {
+    if (failed) {
       jLabel.setForeground(Color.red);
     }
     jLabel.repaint();
+
     try {
-      if (currFailSum != 0) {
-        Thread.sleep(failSleepTime);
-      }
-      else {
-        Thread.sleep(1200);
-      }
+      Thread.sleep(millis);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    jFrame.setVisible(false);
+    this.setVisible(false);
     this.dispose();
-    if (currSuccessSum > 0) {
-      ClipboardUtil.setClipBoard(QiNiuUtil.getSb().toString());
-    }
-    System.exit(0);
   }
-
-  public void finish() {
-    String failstr = "";
-    if (currFailSum != 0) {
-      failstr = "失败:" + currFailSum;
-    }
-    finish("完成! " + failstr);
-  }
-
-
 }

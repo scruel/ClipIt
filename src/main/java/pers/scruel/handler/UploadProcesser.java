@@ -5,10 +5,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import pers.scruel.gui.TipsFrame;
+import pers.scruel.listener.UploadAction;
 import pers.scruel.thread.UploadThread;
 import pers.scruel.util.IOUtil;
 
-import java.awt.Image;
+import java.awt.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,13 +26,14 @@ public class UploadProcesser extends BaseProcesser {
   public UploadProcesser(TipsFrame tipsFrame) {
     super(tipsFrame, UploadThread.class);
     tipsFrame.initJlabelTitle("uploading");
+    this.addActionListener(new UploadAction(tipsFrame));
   }
 
   @Override
   void htmlProcesser(String data) throws Exception {
     Document doc = Jsoup.parse(data);
     Elements elements = doc.select("img");
-    notifyFrameSum(elements.size());
+    updateActionSum(elements.size());
     for (Element element : elements) {
       String filePath = element.attr("src");
       // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
@@ -46,7 +48,7 @@ public class UploadProcesser extends BaseProcesser {
         }
       }
       else {
-        notifyFramSuccess();
+        notifyActionSucceed();
       }
     }
   }
@@ -54,13 +56,13 @@ public class UploadProcesser extends BaseProcesser {
   @Override
   void imageProcesser(Image data) throws Exception {
     byte[] imgBytes = IOUtil.getImgBytes(data);
-    notifyFrameSum(1);
+    updateActionSum(1);
     startThread(imgBytes);
   }
 
   @Override
   void fileListProcesser(List<File> data) throws Exception {
-    notifyFrameSum(data.size());
+    updateActionSum(data.size());
     for (File file : data) {
       startThread(file);
     }

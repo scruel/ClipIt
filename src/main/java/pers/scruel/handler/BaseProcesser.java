@@ -1,8 +1,10 @@
 package pers.scruel.handler;
 
 import pers.scruel.gui.TipsFrame;
+import pers.scruel.listener.BaseAction;
 import pers.scruel.thread.BaseThread;
 import pers.scruel.util.ClipboardUtil;
+import pers.scruel.util.PropertiesUtil;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -18,6 +20,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class BaseProcesser {
   private TipsFrame tipsFrame;
+  private BaseAction action;
   private Class<?> threadClazz;
 
   protected BaseProcesser(TipsFrame tipsFrame, Class<?> threadClazz) {
@@ -28,8 +31,8 @@ public abstract class BaseProcesser {
   public void process() {
     Clipboard clipboard = ClipboardUtil.getClipboard();
     try {
-      if (tipsFrame != null) {
-        tipsFrame.setVisible(true);
+      if ("true".equals(PropertiesUtil.getProperties().getProperty("window.tips"))) {
+        this.tipsFrame.setVisible(true);
       }
       if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
         fileListProcesser((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
@@ -41,23 +44,23 @@ public abstract class BaseProcesser {
         htmlProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
       }
       else {
-        if (tipsFrame != null) {
-          tipsFrame.finish("无内容需要上传！");
-        }
-
+        this.action.actionCompleted();
         return;
       }
-    } catch (Exception e) {
+      // 无任务，结束。
+      if (this.action.getTotalSum() == 0) {
+        this.action.actionCompleted();
+      }
+    } catch (Exception ignore) {
       // e.printStackTrace();
-      System.err.println(e);
-    }
-    if (tipsFrame.getTotalNeededSum() == 0) {
-      tipsFrame.finish();
     }
   }
 
-  public TipsFrame getTipsFrame() {
-    return tipsFrame;
+  public void addActionListener(BaseAction l) {
+    if (l == null) {
+      return;
+    }
+    this.action = l;
   }
 
   abstract void htmlProcesser(String data) throws Exception;
@@ -67,25 +70,24 @@ public abstract class BaseProcesser {
   abstract void fileListProcesser(List<File> data) throws Exception;
 
   public void startThread(Object obj) throws Exception {
-    BaseThread thread = (BaseThread) threadClazz
-        .getConstructor(new Class[]{Object.class, TipsFrame.class})
-        .newInstance(new Object[]{obj, tipsFrame});
+    BaseThread thread = (BaseThread) this.threadClazz
+        .getConstructor(new Class[]{Object.class, BaseAction.class})
+        .newInstance(new Object[]{obj, this.action});
     thread.start();
     // while (true) {
     //     uploadThread.isAlive();
     // }
   }
 
-  public void notifyFrameSum(int size) {
-    if (tipsFrame != null) {
-      tipsFrame.setTotalNeededSum(size);
-    }
+  protected void updateActionSum(int size) {
+    this.action.updateActionSum(size);
   }
 
-  public void notifyFramSuccess() {
-    if (tipsFrame != null) {
-      tipsFrame.notifySuccess();
-    }
+  protected void notifyActionSucceed() {
+    this.action.actionSucceed();
   }
 
+  protected void notifyActionFailed() {
+    this.action.actionFailed();
+  }
 }
