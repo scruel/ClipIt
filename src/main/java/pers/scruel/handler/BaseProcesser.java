@@ -54,7 +54,6 @@ public abstract class BaseProcesser {
     if (tipsFrame.getTotalNeededSum() == 0) {
       tipsFrame.finish();
     }
-
   }
 
   public TipsFrame getTipsFrame() {
