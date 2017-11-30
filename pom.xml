@@ -6,7 +6,7 @@
 
   <groupId>com.scruel</groupId>
   <artifactId>clipIt</artifactId>
-  <version>1.3.3-RELEASE</version>
+  <version>1.4.0-RELEASE</version>
 
   <properties>
     <java.version>1.8</java.version>
