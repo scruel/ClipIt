@@ -1,6 +1,6 @@
 package pers.scruel.thread;
 
-import pers.scruel.gui.TipsFrame;
+import pers.scruel.listener.BaseAction;
 import pers.scruel.util.QiNiuUtil;
 
 import java.io.File;
@@ -13,22 +13,22 @@ import java.net.URL;
  */
 public class UploadThread extends BaseThread {
 
-  public UploadThread(Object uploadObj, TipsFrame tipsFrame) {
-    super(uploadObj, tipsFrame);
+  public UploadThread(Object uploadObj, BaseAction action) {
+    super(uploadObj, action);
   }
 
   @Override
   void runFile(File file) throws Exception {
-    QiNiuUtil.fileUpload(file);
+    action.appendResult(QiNiuUtil.fileUpload(file));
   }
 
   @Override
   void runURL(URL url) throws Exception {
-    QiNiuUtil.urlImgUpload(url);
+    action.appendResult(QiNiuUtil.urlImgUpload(url));
   }
 
   @Override
   void runBytes(byte[] bytes) throws Exception {
-    QiNiuUtil.uploadByBytes(bytes);
+    action.appendResult(QiNiuUtil.uploadByBytes(bytes));
   }
 }

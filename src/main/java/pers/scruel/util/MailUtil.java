@@ -32,10 +32,10 @@ public class MailUtil {
     //解决中文乱码的终极方案
     System.setProperty("mail.mime.splitlongparameters", "false");
     Properties properties = PropertiesUtil.getProperties();
-    this.mailHost = properties.getProperty("mail.smtp.host");
-    this.senderUsername = properties.getProperty("mail.sender.username");
-    this.senderPassword = properties.getProperty("mail.sender.pass");
-    this.receiveUsername = properties.getProperty("mail.receiver.username");
+    this.mailHost = properties.getProperty("stk.mail.smtp.host");
+    this.senderUsername = properties.getProperty("stk.mail.sender.username");
+    this.senderPassword = properties.getProperty("stk.mail.sender.pass");
+    this.receiveUsername = properties.getProperty("stk.mail.receiver.username");
     // 开启SSL加密，否则会失败
     properties.put("mail.smtp.ssl.enable", true);
 
