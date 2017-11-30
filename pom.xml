@@ -35,11 +35,16 @@
       <artifactId>jsoup</artifactId>
       <version>1.8.3</version>
     </dependency>
-
+    <!--云-->
     <dependency>
       <groupId>com.qiniu</groupId>
       <artifactId>qiniu-java-sdk</artifactId>
       <version>7.2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.baidu.aip</groupId>
+      <artifactId>java-sdk</artifactId>
+      <version>3.3.2</version>
     </dependency>
   </dependencies>
 

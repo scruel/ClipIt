@@ -2,6 +2,7 @@ package pers.scruel;
 
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.handler.BaseProcesser;
+import pers.scruel.handler.OCRProcesser;
 import pers.scruel.handler.SendToKindleProcesser;
 import pers.scruel.handler.UploadProcesser;
 import pers.scruel.util.PropertiesUtil;
@@ -16,7 +17,6 @@ import java.util.HashSet;
  */
 @SuppressWarnings("unchecked")
 public class Main {
-  private static TipsFrame tipsFrame;
 
   public static void main(String[] args) {
     HashSet<String> optionsSet = new HashSet<String>();
@@ -37,14 +37,14 @@ public class Main {
       printUsage();
     }
 
-    tipsFrame = new TipsFrame();
+    TipsFrame tipsFrame = new TipsFrame();
 
     try {
       PropertiesUtil.getProperties().getProperty("window.tips");
     } catch (IOException ignore) {
       tipsFrame = new TipsFrame();
       tipsFrame.setVisible(true);
-      tipsFrame.finish("配置加载失败！", 5000, true);
+      tipsFrame.finish("配置加载失败!", 5000, true);
     }
 
     BaseProcesser handler = null;
@@ -53,6 +53,9 @@ public class Main {
     }
     else if ("sendtokindle".equals(command)) {
       handler = new SendToKindleProcesser(tipsFrame);
+    }
+    else if ("ocr".equals(command)) {
+      handler = new OCRProcesser(tipsFrame);
     }
     if (handler == null) {
       printUsage();
@@ -68,6 +71,7 @@ public class Main {
     System.err.println("  comment:\t");
     System.err.println("          sendtokindle - auto send file to email.");
     System.err.println("          upload       - auto upload file to cloud.");
+    System.err.println("          ocr          - ocr image and return text result.");
     System.exit(0);
   }
 }

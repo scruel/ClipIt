@@ -10,3 +10,7 @@ return
 ^!K::
 	RunWait, %comspec% /c "java -jar clipIt.jar sendtokindle" ,, hide
 return
+
+^!O::
+	RunWait, %comspec% /c "java -jar clipIt.jar ocr" ,, hide
+return
