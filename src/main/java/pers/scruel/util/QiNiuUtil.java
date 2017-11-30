@@ -118,21 +118,24 @@ public class QiNiuUtil {
     return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
   }
 
-  private static String getImgType(URL url) {
-    String urlS = url.toString();
-    if (urlS.contains("jpeg")) {
+  public static String getImgType(URL url) {
+    return getImgType(url.toString());
+  }
+
+  public static String getImgType(String s) {
+    if (s.contains("jpeg")) {
       return "jpeg";
     }
-    if (urlS.contains("png")) {
+    if (s.contains("png")) {
       return "png";
     }
-    if (urlS.contains("gif")) {
+    if (s.contains("gif")) {
       return "gif";
     }
-    if (urlS.contains("jpg")) {
+    if (s.contains("jpg")) {
       return "jpg";
     }
-    if (urlS.contains("bmp")) {
+    if (s.contains("bmp")) {
       return "bmp";
     }
     return "unknown";

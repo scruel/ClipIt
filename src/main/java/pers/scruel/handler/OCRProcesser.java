@@ -4,6 +4,7 @@ import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.OCRAction;
 import pers.scruel.thread.OCRThread;
 import pers.scruel.util.IOUtil;
+import pers.scruel.util.QiNiuUtil;
 
 import java.awt.*;
 import java.io.File;
@@ -35,7 +36,12 @@ public class OCRProcesser extends BaseProcesser {
   void fileListProcesser(List<File> data) throws Exception {
     updateActionSum(data.size());
     for (File file : data) {
-      startThread(file);
+      if (!"unknown".equals(QiNiuUtil.getImgType(file.getName()))) {
+        startThread(file);
+      }
+      else {
+        notifyActionSucceed();
+      }
     }
   }
 }
