@@ -34,7 +34,7 @@ public class QiNiuUtil {
   private static String bucket;
   private static String bucketDomain;
   private static Properties properties;
-  private static StringBuffer sb = new StringBuffer();
+  private static StringBuffer lastResult = new StringBuffer();
 
   static {
     try {
@@ -151,8 +151,8 @@ public class QiNiuUtil {
     return "unknown";
   }
 
-  public static StringBuffer getSb() {
-    return sb;
+  public static StringBuffer getLastResult() {
+    return lastResult;
   }
 
   private static void parserQiniuResponseResult(Response response) throws QiniuException {
@@ -174,6 +174,6 @@ public class QiNiuUtil {
       result = String.format("%s%s%s", prefix, bucketDomain + "/" + key, suffix);
     }
     // System.out.println(result);
-    sb.append(result).append("\n");
+    lastResult.append(result).append("\n");
   }
 }
