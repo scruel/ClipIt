@@ -4,7 +4,7 @@ import pers.scruel.gui.TipsFrame;
 import pers.scruel.thread.BaseThread;
 import pers.scruel.util.ClipboardUtil;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.io.File;
@@ -68,10 +68,10 @@ public abstract class BaseProcesser {
   abstract void fileListProcesser(List<File> data) throws Exception;
 
   public void startThread(Object obj) throws Exception {
-    BaseThread uploadThread = (BaseThread) threadClazz
+    BaseThread thread = (BaseThread) threadClazz
         .getConstructor(new Class[]{Object.class, TipsFrame.class})
         .newInstance(new Object[]{obj, tipsFrame});
-    uploadThread.start();
+    thread.start();
     // while (true) {
     //     uploadThread.isAlive();
     // }
