@@ -94,13 +94,13 @@ public class MailUtil {
       // 保存邮件
       message.saveChanges();
       transport = session.getTransport("smtp");
-      System.out.println(session.getTransport());
+      // System.out.println(session.getTransport());
       // smtp验证，就是你用来发邮件的邮箱用户名密码
       transport.connect(mailHost, 465, senderUsername, senderPassword);
       // 发送
       transport.sendMessage(message, message.getAllRecipients());
 
-      System.out.println("send success!");
+      // System.out.println("send success!");
     } catch (Exception e) {
       e.printStackTrace();
     } finally {

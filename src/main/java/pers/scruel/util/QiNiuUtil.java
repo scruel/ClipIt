@@ -173,7 +173,7 @@ public class QiNiuUtil {
       // e.printStackTrace();
       result = String.format("%s%s%s", prefix, bucketDomain + "/" + key, suffix);
     }
-    System.out.println(result);
+    // System.out.println(result);
     sb.append(result).append("\n");
   }
 }
