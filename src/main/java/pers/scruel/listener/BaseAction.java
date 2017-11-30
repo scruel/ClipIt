@@ -42,15 +42,15 @@ public class BaseAction implements ActionListener {
     boolean failed = false;
 
     if (failedSum != 0) {
-      msg = "失败:" + failedSum;
+      msg = "成功: " + succeedSum + " 失败: " + failedSum;
       failed = true;
     }
     else if (succeedSum != 0) {
-      millis = 1500;
+      millis = 1300;
       msg = "完成!";
     }
     else {
-      msg = "无内容需被处理！";
+      msg = "无内容需被处理!";
     }
     frame.finish(msg, millis, failed);
     afterActionCompleted();
