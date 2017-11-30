@@ -5,7 +5,7 @@ ClipIt 是基于 Java 和 AutoHotKey 的一个剪贴板小工具，不仅限于�
 主要功能
 --------
 1. 自动解析剪贴板内容(支持任意文件)并上传到七牛云，返回连接到剪贴板以供粘贴使用，支持自定义前缀后缀等，可用于 MarkDown 编辑。
-2. 自动转换 Kindle (.azw(3)后缀)文件并将生成后的 .mobi 后缀文件发送到指定的 Kindle 邮箱。
+2. 自动转换 Kindle 支持的文件并推送 .mobi 后缀文件到指定的 Kindle 邮箱。
 3. 调用百度 OCR 识别，根据剪贴板图片进行 OCR 识别，返回识别文本到剪贴板以供粘贴使用。
 
 
@@ -23,12 +23,12 @@ ClipIt 是基于 Java 和 AutoHotKey 的一个剪贴板小工具，不仅限于�
     6. 自动粘贴/手动粘贴返回的链接
           
     功能 2(Kindle 推):  
-    1. 配置 config.properties 中的邮箱设置(#sendToKindle下)
-    2. Ctrl + V 复制一个 Kindle(.azw(3)后缀) 文件
-    3. 快捷键 Ctrl + Alt + K 自动转换并上传
+    1. 配置 config.properties 中的收发邮箱(#sendToKindle下)
+    2. Ctrl + V 复制一个 Kindle 支持的文件
+    3. 快捷键 Ctrl + Alt + K 自动转换并推送
     
     功能 3(OCR)：  
-    1. https://console.bce.baidu.com/ai/#/ai/ocr/overview/index 获取 accessKey secretKey
+    1. https://console.bce.baidu.com/ai/#/ai/ocr/overview/index 获取 apiId、apiKey、secretKey
     2. 将以上信息填入根目录的 config.properties 中的对应字段
     3. 截图 / 复制图片文件到剪贴板
     4. 快捷键 Ctrl + Alt + O OCR 识别  
