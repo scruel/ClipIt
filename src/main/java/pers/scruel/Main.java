@@ -1,10 +1,10 @@
 package pers.scruel;
 
 import pers.scruel.gui.TipsFrame;
-import pers.scruel.handler.BaseProcesser;
-import pers.scruel.handler.OCRProcesser;
-import pers.scruel.handler.SendToKindleProcesser;
-import pers.scruel.handler.UploadProcesser;
+import pers.scruel.handler.BaseProcessor;
+import pers.scruel.handler.OCRProcessor;
+import pers.scruel.handler.SendToKindleProcessor;
+import pers.scruel.handler.UploadProcessor;
 import pers.scruel.util.PropertiesUtil;
 
 import java.io.IOException;
@@ -38,7 +38,6 @@ public class Main {
     }
 
     TipsFrame tipsFrame = new TipsFrame();
-
     try {
       PropertiesUtil.getProperties().getProperty("window.tips");
     } catch (IOException ignore) {
@@ -47,15 +46,15 @@ public class Main {
       tipsFrame.finish("配置加载失败!", 5000, true);
     }
 
-    BaseProcesser handler = null;
+    BaseProcessor handler = null;
     if ("upload".equals(command)) {
-      handler = new UploadProcesser(tipsFrame);
+      handler = new UploadProcessor(tipsFrame);
     }
     else if ("sendtokindle".equals(command)) {
-      handler = new SendToKindleProcesser(tipsFrame);
+      handler = new SendToKindleProcessor(tipsFrame);
     }
     else if ("ocr".equals(command)) {
-      handler = new OCRProcesser(tipsFrame);
+      handler = new OCRProcessor(tipsFrame);
     }
     if (handler == null) {
       printUsage();

@@ -18,17 +18,17 @@ public class UploadThread extends BaseThread {
   }
 
   @Override
-  void runFile(File file) throws Exception {
+  void runWithFile(File file) throws Exception {
     action.appendResult(QiNiuUtil.fileUpload(file));
   }
 
   @Override
-  void runURL(URL url) throws Exception {
+  void runWithURL(URL url) throws Exception {
     action.appendResult(QiNiuUtil.urlImgUpload(url));
   }
 
   @Override
-  void runBytes(byte[] bytes) throws Exception {
+  void runWithBytes(byte[] bytes) throws Exception {
     action.appendResult(QiNiuUtil.uploadByBytes(bytes));
   }
 }

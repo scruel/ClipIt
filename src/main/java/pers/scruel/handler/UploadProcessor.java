@@ -21,16 +21,16 @@ import java.util.List;
  * Github : https://github.com/scruel
  */
 @SuppressWarnings("unchecked")
-public class UploadProcesser extends BaseProcesser {
+public class UploadProcessor extends BaseProcessor {
 
-  public UploadProcesser(TipsFrame tipsFrame) {
+  public UploadProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, UploadThread.class);
     tipsFrame.initJlabelTitle("uploading");
     this.addActionListener(new UploadAction(tipsFrame));
   }
 
   @Override
-  void htmlProcesser(String data) throws Exception {
+  void htmlProcess(String data) throws Exception {
     Document doc = Jsoup.parse(data);
     Elements elements = doc.select("img");
     updateActionSum(elements.size());
@@ -54,14 +54,14 @@ public class UploadProcesser extends BaseProcesser {
   }
 
   @Override
-  void imageProcesser(Image data) throws Exception {
+  void imageProcess(Image data) throws Exception {
     byte[] imgBytes = IOUtil.getImgBytes(data);
     updateActionSum(1);
     startThread(imgBytes);
   }
 
   @Override
-  void fileListProcesser(List<File> data) throws Exception {
+  void fileListProcess(List<File> data) throws Exception {
     updateActionSum(data.size());
     for (File file : data) {
       startThread(file);

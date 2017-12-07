@@ -3,6 +3,15 @@ package pers.scruel.listener;
 import pers.scruel.gui.TipsFrame;
 
 /**
+ * An default base class for receiving operation actions.
+ * This class exists as convenience for use, override method{@link #afterActionCompleted()}
+ * is one of the reason to extend this class, yet it's enough for most of the use.
+ * Sum variables in this class are updated by the thread execute
+ * results which really process the data, and then notify the frame window
+ * to display the results.
+ * Note: synchronized method or atom variable seems not necessary
+ * for this class, so I didn't use them.
+ * <p>
  * Created by Scruel on 2017/11/30 030.
  * Github : https://github.com/scruel
  */
