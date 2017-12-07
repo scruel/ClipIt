@@ -23,7 +23,7 @@ public class SendToKindleThread extends BaseThread {
   }
 
   @Override
-  void runFile(File file) throws Exception {
+  void runWithFile(File file) throws Exception {
     MailUtil se = new MailUtil(true);
     String filenameWithoutExtension = file.getName();
     filenameWithoutExtension = filenameWithoutExtension.substring(0, filenameWithoutExtension.lastIndexOf("."));
@@ -44,12 +44,12 @@ public class SendToKindleThread extends BaseThread {
   }
 
   @Override
-  void runURL(URL url) {
+  void runWithURL(URL url) {
 
   }
 
   @Override
-  void runBytes(byte[] bytes) {
+  void runWithBytes(byte[] bytes) {
 
   }
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * Loads properties.
+ *
  * Created by Scruel on 2017/8/19.
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel

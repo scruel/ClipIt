@@ -13,17 +13,28 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * An abstract class that all functions are based on this class to process clipboard
+ * content.
+ * The {@link #process()} method will get content from system clipboard, recognize
+ * it's {@link DataFlavor}, and then process it by specified method which should
+ * and will be implement by subclasses.
+ * Subclasses should split data to parts to the type which can be process by {@link BaseThread}
+ * and then invoke {@link #startThread(Object)} method to process it via starting threads.
+ * <p>
+ *
+ * @see BaseThread
+ * <p>
  * Created by Scruel on 2017/8/26.
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
  */
 @SuppressWarnings("unchecked")
-public abstract class BaseProcesser {
+public abstract class BaseProcessor {
   private TipsFrame tipsFrame;
   private BaseAction action;
   private Class<?> threadClazz;
 
-  protected BaseProcesser(TipsFrame tipsFrame, Class<?> threadClazz) {
+  protected BaseProcessor(TipsFrame tipsFrame, Class<?> threadClazz) {
     this.tipsFrame = tipsFrame;
     this.threadClazz = threadClazz;
   }
@@ -35,19 +46,18 @@ public abstract class BaseProcesser {
         this.tipsFrame.setVisible(true);
       }
       if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
-        fileListProcesser((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
+        fileListProcess((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
       }
       else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
-        imageProcesser((Image) clipboard.getData(DataFlavor.imageFlavor));
+        imageProcess((Image) clipboard.getData(DataFlavor.imageFlavor));
       }
       else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
-        htmlProcesser((String) clipboard.getData(DataFlavor.allHtmlFlavor));
+        htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
       }
       else {
         this.action.actionCompleted();
         return;
       }
-      // 无任务，结束。
       if (this.action.getTotalSum() == 0) {
         this.action.actionCompleted();
       }
@@ -63,11 +73,29 @@ public abstract class BaseProcesser {
     this.action = l;
   }
 
-  abstract void htmlProcesser(String data) throws Exception;
+  /**
+   * Processes html type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void htmlProcess(String data) throws Exception;
 
-  abstract void imageProcesser(Image data) throws Exception;
+  /**
+   * Processes image type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void imageProcess(Image data) throws Exception;
 
-  abstract void fileListProcesser(List<File> data) throws Exception;
+  /**
+   * Processes files type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void fileListProcess(List<File> data) throws Exception;
 
   public void startThread(Object obj) throws Exception {
     BaseThread thread = (BaseThread) this.threadClazz

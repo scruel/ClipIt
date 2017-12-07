@@ -13,24 +13,24 @@ import java.util.List;
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
  */
-public class SendToKindleProcesser extends BaseProcesser {
+public class SendToKindleProcessor extends BaseProcessor {
 
-  public SendToKindleProcesser(TipsFrame tipsFrame) {
+  public SendToKindleProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, SendToKindleThread.class);
     tipsFrame.initJlabelTitle("sending");
     this.addActionListener(new BaseAction(tipsFrame));
   }
 
   @Override
-  void htmlProcesser(String data) throws Exception {
+  void htmlProcess(String data) throws Exception {
   }
 
   @Override
-  void imageProcesser(Image data) throws Exception {
+  void imageProcess(Image data) throws Exception {
   }
 
   @Override
-  void fileListProcesser(List<File> data) throws Exception {
+  void fileListProcess(List<File> data) throws Exception {
     updateActionSum(data.size());
     for (File file : data) {
       if (file.getName().endsWith("azw3") || file.getName().endsWith("azw")

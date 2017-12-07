@@ -16,17 +16,17 @@ public class OCRThread extends BaseThread {
   }
 
   @Override
-  void runFile(File file) throws Exception {
+  void runWithFile(File file) throws Exception {
     action.appendResult(BaiduOCRUtil.fileImgOCR(file));
   }
 
   @Override
-  void runURL(URL url) throws Exception {
+  void runWithURL(URL url) throws Exception {
     action.appendResult(BaiduOCRUtil.urlImgOCR(url));
   }
 
   @Override
-  void runBytes(byte[] bytes) throws Exception {
+  void runWithBytes(byte[] bytes) throws Exception {
     action.appendResult(BaiduOCRUtil.bytesImgOCR(bytes));
   }
 }

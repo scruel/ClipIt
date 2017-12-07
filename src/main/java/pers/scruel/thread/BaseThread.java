@@ -7,6 +7,11 @@ import java.io.File;
 import java.net.URL;
 
 /**
+ * An abstract class for processing data by starting a thread, Interact with the
+ * {@link pers.scruel.listener.BaseAction} class.
+ * This class will process specific type of data, like {@link File} etc., as follows, by
+ * specific method which should and will be implement by subclasses.
+ * <p>
  * Created by Scruel on 2017/8/26.
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
@@ -28,13 +33,13 @@ public abstract class BaseThread extends Thread {
   public void doRun() {
     try {
       if (uploadObj instanceof File) {
-        runFile((File) uploadObj);
+        runWithFile((File) uploadObj);
       }
       else if (uploadObj instanceof URL) {
-        runURL((URL) uploadObj);
+        runWithURL((URL) uploadObj);
       }
       else if (uploadObj instanceof byte[]) {
-        runBytes((byte[]) uploadObj);
+        runWithBytes((byte[]) uploadObj);
       }
     } catch (Exception ignore) {
       // e.printStackTrace();
@@ -45,26 +50,26 @@ public abstract class BaseThread extends Thread {
   }
 
   /**
-   * 对File进行处理
+   * process data of {@link File} type.
    *
    * @param file
    * @throws Exception
    */
-  abstract void runFile(File file) throws Exception;
+  abstract void runWithFile(File file) throws Exception;
 
   /**
-   * 对URL进行处理
+   * process data of {@link URL} type.
    *
    * @param url
    * @throws Exception
    */
-  abstract void runURL(URL url) throws Exception;
+  abstract void runWithURL(URL url) throws Exception;
 
   /**
-   * 对byte数组进行处理
+   * process data of byte array type.
    *
    * @param bytes
    * @throws Exception
    */
-  abstract void runBytes(byte[] bytes) throws Exception;
+  abstract void runWithBytes(byte[] bytes) throws Exception;
 }

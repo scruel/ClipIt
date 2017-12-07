@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * A simple bubble tip frame window that displays the processing status
+ * and result messages.
+ *
  * Created by Scruel on 2017/8/19.
  * Personal blog : http://blog.csdn.net/scruelt
  * Github : https://github.com/scruel
