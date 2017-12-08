@@ -20,7 +20,10 @@ public interface ActionListener {
 
   /**
    * Invoked when operation action has completed(whether it
-   * has succeed or not).
+   * has succeed or not). By default, this method will invoke
+   * finish method in {@link pers.scruel.gui.TipsFrame}, and
+   * invoke {@link #afterActionCompleted()} to do actual
+   * operations like reset clipboard when action has completed.
    */
   void actionCompleted();
 

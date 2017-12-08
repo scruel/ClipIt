@@ -46,6 +46,7 @@ public class BaseAction implements ActionListener {
 
   @Override
   public void actionCompleted() {
+    afterActionCompleted();
     String msg;
     long millis = 2500;
     boolean failed = false;
@@ -62,7 +63,6 @@ public class BaseAction implements ActionListener {
       msg = "无内容需被处理!";
     }
     frame.finish(msg, millis, failed);
-    afterActionCompleted();
     System.exit(0);
   }
 
