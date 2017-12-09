@@ -11,9 +11,7 @@ import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 /**
- * Created by Scruel on 2017/8/26.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class MailUtil {
   private MimeMessage message;

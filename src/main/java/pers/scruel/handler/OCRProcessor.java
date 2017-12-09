@@ -11,8 +11,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Scruel on 2017/11/30 030.
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class OCRProcessor extends BaseProcessor {
   public OCRProcessor(TipsFrame tipsFrame) {

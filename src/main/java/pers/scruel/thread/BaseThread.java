@@ -11,10 +11,8 @@ import java.net.URL;
  * {@link pers.scruel.listener.BaseAction} class.
  * This class will process specific type of data, like {@link File} etc., as follows, by
  * specific method which should and will be implement by subclasses.
- * <p>
- * Created by Scruel on 2017/8/26.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ *
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public abstract class BaseThread extends Thread {
   protected Object uploadObj;

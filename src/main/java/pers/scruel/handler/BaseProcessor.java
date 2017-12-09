@@ -20,13 +20,8 @@ import java.util.List;
  * and will be implement by subclasses.
  * Subclasses should split data to parts to the type which can be process by {@link BaseThread}
  * and then invoke {@link #startThread(Object)} method to process it via starting threads.
- * <p>
  *
- * @see BaseThread
- * <p>
- * Created by Scruel on 2017/8/26.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 @SuppressWarnings("unchecked")
 public abstract class BaseProcessor {

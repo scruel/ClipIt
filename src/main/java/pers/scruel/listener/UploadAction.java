@@ -4,8 +4,7 @@ import pers.scruel.gui.TipsFrame;
 import pers.scruel.util.ClipboardUtil;
 
 /**
- * Created by Scruel on 2017/11/30 030.
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class UploadAction extends BaseAction {
   public UploadAction(TipsFrame frame) {
