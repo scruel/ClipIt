@@ -3,9 +3,8 @@ package pers.scruel.listener;
 /**
  * The listener interface for receiving operation actions when
  * process the clipboard content like an agent.
- * <p>
- * Created by Scruel on 2017/11/30 030.
- * Github : https://github.com/scruel
+ *
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public interface ActionListener {
   /**

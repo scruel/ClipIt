@@ -10,9 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 /**
- * Created by Scruel on 2017/8/18.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class ClipboardUtil {
   public static void setClipBoard(String text) {

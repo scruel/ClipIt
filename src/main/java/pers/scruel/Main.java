@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
- * Created by Scruel on 2017/8/18.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 @SuppressWarnings("unchecked")
 public class Main {

@@ -10,9 +10,7 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * Created by Scruel on 2017/8/26.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class SendToKindleThread extends BaseThread {
   private String path = "tools/kindle";

@@ -1,18 +1,12 @@
 package pers.scruel.util;
 
 import javax.imageio.ImageIO;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
- * Created by Scruel on 2017/8/18.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class IOUtil {
 

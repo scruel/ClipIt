@@ -11,9 +11,8 @@ import pers.scruel.gui.TipsFrame;
  * to display the results.
  * Note: synchronized method or atom variable seems not necessary
  * for this class, so I didn't use them.
- * <p>
- * Created by Scruel on 2017/11/30 030.
- * Github : https://github.com/scruel
+ *
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class BaseAction implements ActionListener {
   protected TipsFrame frame;

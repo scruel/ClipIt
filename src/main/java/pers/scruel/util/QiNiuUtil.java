@@ -22,9 +22,7 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
- * Created by Scruel on 2017/8/18.
- * Personal blog : http://blog.csdn.net/scruelt
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class QiNiuUtil {
   private static UploadManager uploadManager;

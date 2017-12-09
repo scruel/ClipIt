@@ -7,8 +7,7 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * Created by Scruel on 2017/11/30 030.
- * Github : https://github.com/scruel
+ * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class OCRThread extends BaseThread {
   public OCRThread(Object uploadObj, BaseAction action) {
