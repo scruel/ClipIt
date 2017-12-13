@@ -9,12 +9,12 @@ import java.util.Properties;
  *
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class PropertiesUtil {
+public class PropertiesUtils {
   private static final Properties properties = new Properties();
   private static boolean debug = false;
 
   public static Properties getProperties() throws IOException {
-      // properties.load(QiNiuUtil.class.getClassLoader().getResourceAsStream("config.properties"));
+    // properties.load(QiNiuUtils.class.getClassLoader().getResourceAsStream("config.properties"));
       if (debug) {
         properties.load(new FileInputStream("C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties"));
       }

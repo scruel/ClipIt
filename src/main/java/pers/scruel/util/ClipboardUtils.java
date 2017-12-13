@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class ClipboardUtil {
+public class ClipboardUtils {
   public static void setClipBoard(String text) {
     if (StringUtil.isBlank(text)) {
       return;
@@ -21,7 +21,7 @@ public class ClipboardUtil {
     StringSelection selection = new StringSelection(text);
     clipboard.setContents(selection, selection);
     try {
-      if (!"false".equals(PropertiesUtil.getProperties().getProperty("auto.paste"))) {
+      if (!"false".equals(PropertiesUtils.getProperties().getProperty("auto.paste"))) {
         paste();
       }
     } catch (IOException ignore) {

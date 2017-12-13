@@ -5,7 +5,7 @@ import pers.scruel.handler.BaseProcessor;
 import pers.scruel.handler.OCRProcessor;
 import pers.scruel.handler.SendToKindleProcessor;
 import pers.scruel.handler.UploadProcessor;
-import pers.scruel.util.PropertiesUtil;
+import pers.scruel.util.PropertiesUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -37,7 +37,7 @@ public class Main {
 
     TipsFrame tipsFrame = new TipsFrame();
     try {
-      PropertiesUtil.getProperties().getProperty("window.tips");
+      PropertiesUtils.getProperties().getProperty("window.tips");
     } catch (IOException ignore) {
       tipsFrame = new TipsFrame();
       tipsFrame.setVisible(true);

@@ -1,7 +1,7 @@
 package pers.scruel.thread;
 
 import pers.scruel.listener.BaseAction;
-import pers.scruel.util.BaiduOCRUtil;
+import pers.scruel.util.BaiduOCRUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -16,16 +16,16 @@ public class OCRThread extends BaseThread {
 
   @Override
   void runWithFile(File file) throws Exception {
-    action.appendResult(BaiduOCRUtil.fileImgOCR(file));
+    action.appendResult(BaiduOCRUtils.fileImgOCR(file));
   }
 
   @Override
   void runWithURL(URL url) throws Exception {
-    action.appendResult(BaiduOCRUtil.urlImgOCR(url));
+    action.appendResult(BaiduOCRUtils.urlImgOCR(url));
   }
 
   @Override
   void runWithBytes(byte[] bytes) throws Exception {
-    action.appendResult(BaiduOCRUtil.bytesImgOCR(bytes));
+    action.appendResult(BaiduOCRUtils.bytesImgOCR(bytes));
   }
 }

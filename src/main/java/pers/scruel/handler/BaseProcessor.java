@@ -3,8 +3,8 @@ package pers.scruel.handler;
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.BaseAction;
 import pers.scruel.thread.BaseThread;
-import pers.scruel.util.ClipboardUtil;
-import pers.scruel.util.PropertiesUtil;
+import pers.scruel.util.ClipboardUtils;
+import pers.scruel.util.PropertiesUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -35,9 +35,9 @@ public abstract class BaseProcessor {
   }
 
   public void process() {
-    Clipboard clipboard = ClipboardUtil.getClipboard();
+    Clipboard clipboard = ClipboardUtils.getClipboard();
     try {
-      if ("true".equals(PropertiesUtil.getProperties().getProperty("window.tips"))) {
+      if ("true".equals(PropertiesUtils.getProperties().getProperty("window.tips"))) {
         this.tipsFrame.setVisible(true);
       }
       if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {

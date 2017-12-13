@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.UploadAction;
 import pers.scruel.thread.UploadThread;
-import pers.scruel.util.IOUtil;
+import pers.scruel.util.IOUtils;
 
 import java.awt.*;
 import java.io.File;
@@ -34,7 +34,7 @@ public class UploadProcessor extends BaseProcessor {
     updateActionSum(elements.size());
     for (Element element : elements) {
       String filePath = element.attr("src");
-      // new Thread(() -> QiNiuUtil.fileUpload(new File(filePath))).start();
+      // new Thread(() -> QiNiuUtils.fileUpload(new File(filePath))).start();
       if (filePath.matches("[a-zA-Z]:.*")) {
         startThread(new File(filePath));
       }
@@ -53,7 +53,7 @@ public class UploadProcessor extends BaseProcessor {
 
   @Override
   void imageProcess(Image data) throws Exception {
-    byte[] imgBytes = IOUtil.getImgBytes(data);
+    byte[] imgBytes = IOUtils.getImgBytes(data);
     updateActionSum(1);
     startThread(imgBytes);
   }

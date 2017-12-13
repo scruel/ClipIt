@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class IOUtil {
+public class IOUtils {
 
   public static byte[] getImgBytes(Image image) {
     ByteArrayOutputStream out = new ByteArrayOutputStream();

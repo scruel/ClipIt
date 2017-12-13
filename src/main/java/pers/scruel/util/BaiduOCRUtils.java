@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class BaiduOCRUtil {
+public class BaiduOCRUtils {
   private static AipOcr client;
   private static String apiId;
   private static String secretKey;
@@ -25,7 +25,7 @@ public class BaiduOCRUtil {
 
   static {
     try {
-      properties = PropertiesUtil.getProperties();
+      properties = PropertiesUtils.getProperties();
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(0);

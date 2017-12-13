@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class MailUtil {
+public class MailUtils {
   private MimeMessage message;
   private Session session;
   private Transport transport;
@@ -26,10 +26,10 @@ public class MailUtil {
   /*
    * 初始化方法
    */
-  public MailUtil(boolean debug) throws GeneralSecurityException, IOException {
+  public MailUtils(boolean debug) throws GeneralSecurityException, IOException {
     //解决中文乱码的终极方案
     System.setProperty("mail.mime.splitlongparameters", "false");
-    Properties properties = PropertiesUtil.getProperties();
+    Properties properties = PropertiesUtils.getProperties();
     this.mailHost = properties.getProperty("stk.mail.smtp.host");
     this.senderUsername = properties.getProperty("stk.mail.sender.username");
     this.senderPassword = properties.getProperty("stk.mail.sender.pass");
@@ -113,7 +113,7 @@ public class MailUtil {
   }
 
   // public static void main(String[] args) throws GeneralSecurityException {
-  //     pers.scruel.util.MailUtil se = new pers.scruel.util.MailUtil(true);
+  //     pers.scruel.util.MailUtils se = new pers.scruel.util.MailUtils(true);
   //     File affix = new File("F:\\Resilio Sync\\得到2\\每天听本书\\2016\\2016年09月\\0927关键时刻\\关键时刻.doc");
   //     se.doSendHtmlEmail("邮件主题", "邮件内容", affix);//
   // }

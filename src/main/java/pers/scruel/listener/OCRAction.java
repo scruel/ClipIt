@@ -1,7 +1,7 @@
 package pers.scruel.listener;
 
 import pers.scruel.gui.TipsFrame;
-import pers.scruel.util.ClipboardUtil;
+import pers.scruel.util.ClipboardUtils;
 
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
@@ -14,7 +14,7 @@ public class OCRAction extends BaseAction {
   @Override
   public void afterActionCompleted() {
     if (super.getSucceedSum() > 0) {
-      ClipboardUtil.setClipBoard(getResult().toString());
+      ClipboardUtils.setClipBoard(getResult().toString());
     }
   }
 }

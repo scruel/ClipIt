@@ -2,9 +2,9 @@ package pers.scruel.thread;
 
 
 import pers.scruel.listener.BaseAction;
-import pers.scruel.util.IOUtil;
-import pers.scruel.util.MailUtil;
-import pers.scruel.util.PropertiesUtil;
+import pers.scruel.util.IOUtils;
+import pers.scruel.util.MailUtils;
+import pers.scruel.util.PropertiesUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -22,13 +22,13 @@ public class SendToKindleThread extends BaseThread {
 
   @Override
   void runWithFile(File file) throws Exception {
-    MailUtil se = new MailUtil(true);
+    MailUtils se = new MailUtils(true);
     String filenameWithoutExtension = file.getName();
     filenameWithoutExtension = filenameWithoutExtension.substring(0, filenameWithoutExtension.lastIndexOf("."));
     File newFile = new File(path + "\\temp\\" + filenameWithoutExtension + ".mobi");
 
     if (!newFile.exists()) {
-      IOUtil.copyFile(file, path + "\\temp\\" + file.getName());
+      IOUtils.copyFile(file, path + "\\temp\\" + file.getName());
       Process p = Runtime.getRuntime()
           .exec("cmd.exe /c start /wait mobi.bat", //path to executable
               null, // env vars, null means pass parent env
@@ -36,8 +36,8 @@ public class SendToKindleThread extends BaseThread {
       p.waitFor();
     }
     se.doSendHtmlEmail("sendToKindle", "send", newFile);
-    if ("true".equals(PropertiesUtil.getProperties().getProperty("stk.auto.delete"))) {
-      IOUtil.deleteFileMatchByPrefix(path + "\\temp\\", filenameWithoutExtension);
+    if ("true".equals(PropertiesUtils.getProperties().getProperty("stk.auto.delete"))) {
+      IOUtils.deleteFileMatchByPrefix(path + "\\temp\\", filenameWithoutExtension);
     }
   }
 
