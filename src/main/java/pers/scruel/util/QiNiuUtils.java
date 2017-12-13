@@ -24,7 +24,7 @@ import java.util.Random;
 /**
  * @author Scruel Tao <scruel@vip.qq.com>
  */
-public class QiNiuUtil {
+public class QiNiuUtils {
   private static UploadManager uploadManager;
   private static String upToken;
   private static String accessKey;
@@ -35,7 +35,7 @@ public class QiNiuUtil {
 
   static {
     try {
-      properties = PropertiesUtil.getProperties();
+      properties = PropertiesUtils.getProperties();
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(0);
