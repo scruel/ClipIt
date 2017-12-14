@@ -10,17 +10,20 @@ import java.util.Properties;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class PropertiesUtils {
-  private static final Properties properties = new Properties();
   private static boolean debug = false;
+  private static final Properties properties = new Properties();
+  private static final String SCRUEL_TEST_PATH = "C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties";
+  private static boolean loaded = false;
 
   public static Properties getProperties() throws IOException {
-    // properties.load(QiNiuUtils.class.getClassLoader().getResourceAsStream("config.properties"));
-      if (debug) {
-        properties.load(new FileInputStream("C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties"));
-      }
-      else {
-        properties.load(new FileInputStream("config.properties"));
-      }
+    if (loaded) return properties;
+    if (debug) {
+      properties.load(new FileInputStream(SCRUEL_TEST_PATH));
+    }
+    else {
+      properties.load(new FileInputStream("config.properties"));
+    }
+    loaded = true;
     return properties;
   }
 
