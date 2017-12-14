@@ -1,7 +1,7 @@
 package pers.scruel.handler;
 
 import pers.scruel.gui.TipsFrame;
-import pers.scruel.listener.OCRAction;
+import pers.scruel.listener.PasteAction;
 import pers.scruel.thread.OCRThread;
 import pers.scruel.util.IOUtils;
 import pers.scruel.util.QiNiuUtils;
@@ -17,7 +17,7 @@ public class OCRProcessor extends BaseProcessor {
   public OCRProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, OCRThread.class);
     tipsFrame.initJlabelTitle("OCRing");
-    this.addActionListener(new OCRAction(tipsFrame));
+    this.addActionListener(new PasteAction(tipsFrame));
   }
 
   @Override

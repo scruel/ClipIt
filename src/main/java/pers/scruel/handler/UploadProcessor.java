@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import pers.scruel.gui.TipsFrame;
-import pers.scruel.listener.UploadAction;
+import pers.scruel.listener.PasteAction;
 import pers.scruel.thread.UploadThread;
 import pers.scruel.util.IOUtils;
 
@@ -24,7 +24,7 @@ public class UploadProcessor extends BaseProcessor {
   public UploadProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, UploadThread.class);
     tipsFrame.initJlabelTitle("uploading");
-    this.addActionListener(new UploadAction(tipsFrame));
+    this.addActionListener(new PasteAction(tipsFrame));
   }
 
   @Override
