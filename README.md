@@ -11,7 +11,8 @@ ClipIt 是基于 Java 和 AutoHotKey 的一个剪贴板小工具，不仅限于�
 
 使用说明
 --------
-1. 安装及配置 JDK 环境(自行搜索)
+1. 安装及配置 JDK 环境(自行搜索)  
+（注：网盘中已上传 JDK8，只需添加环境变量即可。）
 2. 运行 clipIt-32.exe (clipIt-64.exe)
 3. 功能分类步骤：  
     功能 1(云上传)：  
@@ -34,7 +35,18 @@ ClipIt 是基于 Java 和 AutoHotKey 的一个剪贴板小工具，不仅限于�
     4. 快捷键 Ctrl + Alt + O OCR 识别  
     5. 自动粘贴/手动粘贴返回的 OCR 识别文本
 
-
 (jar 文件请自行打包)
-完整可运行：
-https://pan.baidu.com/s/1mikNAUc
+
+
+完整可运行：[百度网盘](https://pan.baidu.com/s/1mikNAUc)
+
+## 许可协议
+[MIT License](https://github.com/scruel/ClipIt/blob/master/LICENSE)
+
+如不特殊注明，所有模块都以此协议授权使用。若有意愿软件化本项目，欢迎联系。
+
+GitHub: https://github.com/scruel/ClipIt
+
+作者: Scruel
+
+联系邮箱: scruel@vip.qq.com

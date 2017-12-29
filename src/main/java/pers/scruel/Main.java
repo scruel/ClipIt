@@ -63,6 +63,14 @@ public class Main {
   }
 
   private static void printUsage() {
+    System.err.println("*****************ClipIt*****************");
+    System.err.println("Expands clipboard to do more with shortcut keys.");
+    System.err.println();
+    System.err.println("GitHub: https://github.com/scruel/ClipIt");
+    System.err.println("Author: Scruel");
+    System.err.println("Email: scruel@vip.qq.com");
+    System.err.println("****************************************");
+    System.err.println();
     System.err.println("Usage: ClipIt command");
     System.err.println("  -h\tthis message");
     System.err.println("  comment:\t");
