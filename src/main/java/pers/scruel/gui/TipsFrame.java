@@ -1,8 +1,12 @@
 package pers.scruel.gui;
 
 
+import pers.scruel.util.PropertiesUtils;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * A simple bubble tip frame window that displays the processing status
@@ -11,13 +15,14 @@ import java.awt.*;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class TipsFrame extends JFrame {
+  private final boolean needTips = getNeedTips();
   private static JLabel jLabel;
   private String labTitle = "";
 
   public TipsFrame() {
     super();
     jLabel = new JLabel();
-    Icon icon = new ImageIcon(TipsFrame.class.getClassLoader().getResource("l.gif"));
+    Icon icon = new ImageIcon(Objects.requireNonNull(TipsFrame.class.getClassLoader().getResource("l.gif")));
     jLabel.setIcon(icon);
     JPanel jPanel = new JPanel();
     jPanel.setBackground(new Color(232, 238, 248));
@@ -62,6 +67,17 @@ public class TipsFrame extends JFrame {
       e.printStackTrace();
     }
     this.setVisible(false);
-    this.dispose();
+  }
+
+  private boolean getNeedTips() {
+    try {
+      return "true".equals(PropertiesUtils.getProperties().getProperty("window.tips"));
+    } catch (IOException ignore) {
+      return false;
+    }
+  }
+
+  public boolean needTips() {
+    return this.needTips;
   }
 }

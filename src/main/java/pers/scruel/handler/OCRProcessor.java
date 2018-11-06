@@ -14,10 +14,11 @@ import java.util.List;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class OCRProcessor extends BaseProcessor {
+  private final String title = "OCRing";
+
   public OCRProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, OCRThread.class);
-    tipsFrame.initJlabelTitle("OCRing");
-    this.addActionListener(new PasteAction(tipsFrame));
+    this.setActionListener(new PasteAction(tipsFrame));
   }
 
   @Override
@@ -42,5 +43,10 @@ public class OCRProcessor extends BaseProcessor {
         notifyActionSucceed();
       }
     }
+  }
+
+  @Override
+  String getTitle() {
+    return title;
   }
 }
