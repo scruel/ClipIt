@@ -19,6 +19,8 @@ public class BaseAction implements ActionListener {
   private int totalSum = 0;
   private int failedSum = 0;
   private int succeedSum = 0;
+  private final int succeedTipsDelay = 1300;
+  private final int failedTipsDelay = 2500;
   private StringBuffer result = new StringBuffer();
 
   public BaseAction(TipsFrame frame) {
@@ -47,7 +49,6 @@ public class BaseAction implements ActionListener {
   public void actionCompleted() {
     afterActionCompleted();
     String msg;
-    long millis = 2500;
     boolean failed = false;
 
     if (failedSum != 0) {
@@ -55,14 +56,12 @@ public class BaseAction implements ActionListener {
       failed = true;
     }
     else if (succeedSum != 0) {
-      millis = 1300;
       msg = "完成!";
     }
     else {
       msg = "无内容需被处理!";
     }
-    frame.finish(msg, millis, failed);
-    System.exit(0);
+    frame.finish(msg, failed ? failedTipsDelay : succeedTipsDelay, failed);
   }
 
   @Override

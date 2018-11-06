@@ -12,11 +12,11 @@ import java.util.List;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class SendToKindleProcessor extends BaseProcessor {
+  private final String title = "sending";
 
   public SendToKindleProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, SendToKindleThread.class);
-    tipsFrame.initJlabelTitle("sending");
-    this.addActionListener(new BaseAction(tipsFrame));
+    this.setActionListener(new BaseAction(tipsFrame));
   }
 
   @Override
@@ -39,6 +39,11 @@ public class SendToKindleProcessor extends BaseProcessor {
         notifyActionSucceed();
       }
     }
+  }
+
+  @Override
+  String getTitle() {
+    return title;
   }
 }
 

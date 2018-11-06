@@ -4,7 +4,6 @@ import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.BaseAction;
 import pers.scruel.thread.BaseThread;
 import pers.scruel.util.ClipboardUtils;
-import pers.scruel.util.PropertiesUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -35,9 +34,10 @@ public abstract class BaseProcessor {
   }
 
   public void process() {
+    this.tipsFrame.initJlabelTitle(getTitle());
     Clipboard clipboard = ClipboardUtils.getClipboard();
     try {
-      if ("true".equals(PropertiesUtils.getProperties().getProperty("window.tips"))) {
+      if (this.tipsFrame.needTips()) {
         this.tipsFrame.setVisible(true);
       }
       if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
@@ -61,7 +61,7 @@ public abstract class BaseProcessor {
     }
   }
 
-  public void addActionListener(BaseAction l) {
+  public void setActionListener(BaseAction l) {
     if (l == null) {
       return;
     }
@@ -113,4 +113,6 @@ public abstract class BaseProcessor {
   protected void notifyActionFailed() {
     this.action.actionFailed();
   }
+
+  abstract String getTitle();
 }

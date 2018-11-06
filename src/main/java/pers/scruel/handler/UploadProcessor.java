@@ -20,11 +20,11 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class UploadProcessor extends BaseProcessor {
+  private final String title = "uploading";
 
   public UploadProcessor(TipsFrame tipsFrame) {
     super(tipsFrame, UploadThread.class);
-    tipsFrame.initJlabelTitle("uploading");
-    this.addActionListener(new PasteAction(tipsFrame));
+    this.setActionListener(new PasteAction(tipsFrame));
   }
 
   @Override
@@ -64,5 +64,10 @@ public class UploadProcessor extends BaseProcessor {
     for (File file : data) {
       startThread(file);
     }
+  }
+
+  @Override
+  String getTitle() {
+    return title;
   }
 }
