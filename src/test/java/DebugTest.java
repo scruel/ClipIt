@@ -9,8 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 public class DebugTest {
 
-  @Test
-  public void produced() {
-    assertEquals(false, PropertiesUtils.isDebug());
-  }
+    @Test
+    public void produced() {
+        assertEquals(false, PropertiesUtils.isDebug());
+    }
 }

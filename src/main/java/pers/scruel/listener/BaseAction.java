@@ -15,93 +15,93 @@ import pers.scruel.gui.TipsFrame;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class BaseAction implements ActionListener {
-  protected TipsFrame frame;
-  private int totalSum = 0;
-  private int failedSum = 0;
-  private int succeedSum = 0;
-  private final int succeedTipsDelay = 1300;
-  private final int failedTipsDelay = 2500;
-  private StringBuffer result = new StringBuffer();
+    private final int succeedTipsDelay = 1300;
+    private final int failedTipsDelay = 2500;
+    protected TipsFrame frame;
+    private int totalSum = 0;
+    private int failedSum = 0;
+    private int succeedSum = 0;
+    private StringBuffer result = new StringBuffer();
 
-  public BaseAction(TipsFrame frame) {
-    this.frame = frame;
-  }
-
-  @Override
-  public void actionFailed() {
-    failedSum++;
-    frame.updateJLable((failedSum + succeedSum), totalSum);
-    if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
-      actionCompleted();
+    public BaseAction(TipsFrame frame) {
+        this.frame = frame;
     }
-  }
 
-  @Override
-  public void actionSucceed() {
-    succeedSum++;
-    frame.updateJLable((failedSum + succeedSum), totalSum);
-    if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
-      actionCompleted();
+    @Override
+    public void actionFailed() {
+        failedSum++;
+        frame.updateJLable((failedSum + succeedSum), totalSum);
+        if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
+            actionCompleted();
+        }
     }
-  }
 
-  @Override
-  public void actionCompleted() {
-    afterActionCompleted();
-    String msg;
-    boolean failed = false;
-
-    if (failedSum != 0) {
-      msg = "成功: " + succeedSum + " 失败: " + failedSum;
-      failed = true;
+    @Override
+    public void actionSucceed() {
+        succeedSum++;
+        frame.updateJLable((failedSum + succeedSum), totalSum);
+        if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
+            actionCompleted();
+        }
     }
-    else if (succeedSum != 0) {
-      msg = "完成!";
+
+    @Override
+    public void actionCompleted() {
+        afterActionCompleted();
+        String msg;
+        boolean failed = false;
+
+        if (failedSum != 0) {
+            msg = "成功: " + succeedSum + " 失败: " + failedSum;
+            failed = true;
+        }
+        else if (succeedSum != 0) {
+            msg = "完成!";
+        }
+        else {
+            msg = "无内容需被处理!";
+        }
+        frame.finish(msg, failed ? failedTipsDelay : succeedTipsDelay, failed);
     }
-    else {
-      msg = "无内容需被处理!";
+
+    @Override
+    public void updateActionSum(int sum) {
+        if (sum == 0) actionCompleted();
+        this.totalSum = sum;
+        frame.updateJLable(0, totalSum);
     }
-    frame.finish(msg, failed ? failedTipsDelay : succeedTipsDelay, failed);
-  }
 
-  @Override
-  public void updateActionSum(int sum) {
-    if (sum == 0) actionCompleted();
-    this.totalSum = sum;
-    frame.updateJLable(0, totalSum);
-  }
+    @Override
+    public void afterActionCompleted() {
+    }
 
-  @Override
-  public void afterActionCompleted() {
-  }
+    @Override
+    public void updateResult(StringBuffer stringBuffer) {
+        this.result = stringBuffer;
+    }
 
-  @Override
-  public void updateResult(StringBuffer stringBuffer) {
-    this.result = stringBuffer;
-  }
+    @Override
+    public void appendResult(StringBuffer stringBuffer) {
+        this.result.append(stringBuffer);
+    }
 
-  @Override
-  public void appendResult(StringBuffer stringBuffer) {
-    this.result.append(stringBuffer);
-  }
+    public void appendResult(String stringBuffer) {
+        this.result.append(stringBuffer);
+    }
 
-  public void appendResult(String stringBuffer) {
-    this.result.append(stringBuffer);
-  }
+    public StringBuffer getResult() {
+        return result;
+    }
 
-  public StringBuffer getResult() {
-    return result;
-  }
+    public int getTotalSum() {
+        return totalSum;
+    }
 
-  public int getTotalSum() {
-    return totalSum;
-  }
+    public int getFailedSum() {
+        return failedSum;
+    }
 
-  public int getFailedSum() {
-    return failedSum;
-  }
-
-  public int getSucceedSum() {
-    return succeedSum;
-  }
+    public int getSucceedSum() {
+        return succeedSum;
+    }
 }

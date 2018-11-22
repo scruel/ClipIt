@@ -13,41 +13,41 @@ import java.net.URL;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class SendToKindleThread extends BaseThread {
-  private String path = "tools/kindle";
+    private String path = "tools/kindle";
 
-  public SendToKindleThread(Object uploadObj, BaseAction action) {
-    super(uploadObj, action);
-    // path = SendToKindleThread.class.getClassLoader().getResource("tools/kindle").getPath();
-  }
-
-  @Override
-  void runWithFile(File file) throws Exception {
-    MailUtils se = new MailUtils(true);
-    String filenameWithoutExtension = file.getName();
-    filenameWithoutExtension = filenameWithoutExtension.substring(0, filenameWithoutExtension.lastIndexOf("."));
-    File newFile = new File(path + "\\temp\\" + filenameWithoutExtension + ".mobi");
-
-    if (!newFile.exists()) {
-      IOUtils.copyFile(file, path + "\\temp\\" + file.getName());
-      Process p = Runtime.getRuntime()
-          .exec("cmd.exe /c start /wait mobi.bat", //path to executable
-              null, // env vars, null means pass parent env
-              new File(path)); // working directory
-      p.waitFor();
+    public SendToKindleThread(Object uploadObj, BaseAction action) {
+        super(uploadObj, action);
+        // path = SendToKindleThread.class.getClassLoader().getResource("tools/kindle").getPath();
     }
-    se.doSendHtmlEmail("sendToKindle", "send", newFile);
-    if ("true".equals(PropertiesUtils.getProperties().getProperty("stk.auto.delete"))) {
-      IOUtils.deleteFileMatchByPrefix(path + "\\temp\\", filenameWithoutExtension);
+
+    @Override
+    void runWithFile(File file) throws Exception {
+        MailUtils se = new MailUtils(true);
+        String filenameWithoutExtension = file.getName();
+        filenameWithoutExtension = filenameWithoutExtension.substring(0, filenameWithoutExtension.lastIndexOf("."));
+        File newFile = new File(path + "\\temp\\" + filenameWithoutExtension + ".mobi");
+
+        if (!newFile.exists()) {
+            IOUtils.copyFile(file, path + "\\temp\\" + file.getName());
+            Process p = Runtime.getRuntime()
+                    .exec("cmd.exe /c start /wait mobi.bat", //path to executable
+                            null, // env vars, null means pass parent env
+                            new File(path)); // working directory
+            p.waitFor();
+        }
+        se.doSendHtmlEmail("sendToKindle", "send", newFile);
+        if ("true".equals(PropertiesUtils.getProperties().getProperty("stk.auto.delete"))) {
+            IOUtils.deleteFileMatchByPrefix(path + "\\temp\\", filenameWithoutExtension);
+        }
     }
-  }
 
-  @Override
-  void runWithURL(URL url) {
+    @Override
+    void runWithURL(URL url) {
 
-  }
+    }
 
-  @Override
-  void runWithBytes(byte[] bytes) {
+    @Override
+    void runWithBytes(byte[] bytes) {
 
-  }
+    }
 }

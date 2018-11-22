@@ -24,95 +24,95 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public abstract class BaseProcessor {
-  private TipsFrame tipsFrame;
-  private BaseAction action;
-  private Class<?> threadClazz;
+    private TipsFrame tipsFrame;
+    private BaseAction action;
+    private Class<?> threadClazz;
 
-  protected BaseProcessor(TipsFrame tipsFrame, Class<?> threadClazz) {
-    this.tipsFrame = tipsFrame;
-    this.threadClazz = threadClazz;
-  }
-
-  public void process() {
-    this.tipsFrame.initJlabelTitle(getTitle());
-    Clipboard clipboard = ClipboardUtils.getClipboard();
-    try {
-      if (this.tipsFrame.needTips()) {
-        this.tipsFrame.setVisible(true);
-      }
-      if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
-        fileListProcess((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
-      }
-      else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
-        imageProcess((Image) clipboard.getData(DataFlavor.imageFlavor));
-      }
-      else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
-        htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
-      }
-      else {
-        this.action.actionCompleted();
-        return;
-      }
-      if (this.action.getTotalSum() == 0) {
-        this.action.actionCompleted();
-      }
-    } catch (Exception ignore) {
-      // e.printStackTrace();
+    protected BaseProcessor(TipsFrame tipsFrame, Class<?> threadClazz) {
+        this.tipsFrame = tipsFrame;
+        this.threadClazz = threadClazz;
     }
-  }
 
-  public void setActionListener(BaseAction l) {
-    if (l == null) {
-      return;
+    public void process() {
+        this.tipsFrame.initJlabelTitle(getTitle());
+        Clipboard clipboard = ClipboardUtils.getClipboard();
+        try {
+            if (this.tipsFrame.needTips()) {
+                this.tipsFrame.setVisible(true);
+            }
+            if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
+                fileListProcess((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
+            }
+            else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
+                imageProcess((Image) clipboard.getData(DataFlavor.imageFlavor));
+            }
+            else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
+                htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
+            }
+            else {
+                this.action.actionCompleted();
+                return;
+            }
+            if (this.action.getTotalSum() == 0) {
+                this.action.actionCompleted();
+            }
+        } catch (Exception ignore) {
+            // e.printStackTrace();
+        }
     }
-    this.action = l;
-  }
 
-  /**
-   * Processes html type data from clipboard.
-   *
-   * @param data
-   * @throws Exception
-   */
-  abstract void htmlProcess(String data) throws Exception;
+    public void setActionListener(BaseAction l) {
+        if (l == null) {
+            return;
+        }
+        this.action = l;
+    }
 
-  /**
-   * Processes image type data from clipboard.
-   *
-   * @param data
-   * @throws Exception
-   */
-  abstract void imageProcess(Image data) throws Exception;
+    /**
+     * Processes html type data from clipboard.
+     *
+     * @param data
+     * @throws Exception
+     */
+    abstract void htmlProcess(String data) throws Exception;
 
-  /**
-   * Processes files type data from clipboard.
-   *
-   * @param data
-   * @throws Exception
-   */
-  abstract void fileListProcess(List<File> data) throws Exception;
+    /**
+     * Processes image type data from clipboard.
+     *
+     * @param data
+     * @throws Exception
+     */
+    abstract void imageProcess(Image data) throws Exception;
 
-  public void startThread(Object obj) throws Exception {
-    BaseThread thread = (BaseThread) this.threadClazz
-        .getConstructor(new Class[]{Object.class, BaseAction.class})
-        .newInstance(new Object[]{obj, this.action});
-    thread.start();
-    // while (true) {
-    //     uploadThread.isAlive();
-    // }
-  }
+    /**
+     * Processes files type data from clipboard.
+     *
+     * @param data
+     * @throws Exception
+     */
+    abstract void fileListProcess(List<File> data) throws Exception;
 
-  protected void updateActionSum(int size) {
-    this.action.updateActionSum(size);
-  }
+    public void startThread(Object obj) throws Exception {
+        BaseThread thread = (BaseThread) this.threadClazz
+                .getConstructor(new Class[]{Object.class, BaseAction.class})
+                .newInstance(new Object[]{obj, this.action});
+        thread.start();
+        // while (true) {
+        //     uploadThread.isAlive();
+        // }
+    }
 
-  protected void notifyActionSucceed() {
-    this.action.actionSucceed();
-  }
+    protected void updateActionSum(int size) {
+        this.action.updateActionSum(size);
+    }
 
-  protected void notifyActionFailed() {
-    this.action.actionFailed();
-  }
+    protected void notifyActionSucceed() {
+        this.action.actionSucceed();
+    }
 
-  abstract String getTitle();
+    protected void notifyActionFailed() {
+        this.action.actionFailed();
+    }
+
+    abstract String getTitle();
 }

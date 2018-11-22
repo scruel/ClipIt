@@ -17,79 +17,79 @@ import java.util.Random;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public class BaiduOCRUtils {
-  private static AipOcr client;
-  private static String apiId;
-  private static String secretKey;
-  private static String apiKey;
-  private static Properties properties;
+    private static AipOcr client;
+    private static String apiId;
+    private static String secretKey;
+    private static String apiKey;
+    private static Properties properties;
 
-  static {
-    try {
-      properties = PropertiesUtils.getProperties();
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(0);
+    static {
+        try {
+            properties = PropertiesUtils.getProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+
+        apiId = properties.getProperty("baiduyun.api.id");
+        apiKey = properties.getProperty("baiduyun.api.key");
+        secretKey = properties.getProperty("baiduyun.secret.key");
+        client = new AipOcr(apiId, apiKey, secretKey);
     }
 
-    apiId = properties.getProperty("baiduyun.api.id");
-    apiKey = properties.getProperty("baiduyun.api.key");
-    secretKey = properties.getProperty("baiduyun.secret.key");
-    client = new AipOcr(apiId, apiKey, secretKey);
-  }
-
-  public static String bytesImgOCR(byte[] bytes) {
-    JSONObject res = client.basicGeneral(bytes, new HashMap<String, String>());
-    return parserResponseResult(res);
-  }
-
-  public static String fileImgOCR(File file) {
-    JSONObject res = client.basicGeneral(file.getPath(), new HashMap<String, String>());
-    return parserResponseResult(res);
-  }
-
-  public static String urlImgOCR(URL url) {
-    JSONObject res = client.basicGeneralUrl(url.getPath(), new HashMap<String, String>());
-    return parserResponseResult(res);
-  }
-
-  private static String getDateKey() {
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-    Date date = new Date();
-    String dateStr = simpleDateFormat.format(date);
-    Random rm = new Random();
-    return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
-  }
-
-  private static String getImgType(URL url) {
-    String urlS = url.toString();
-    if (urlS.contains("jpeg")) {
-      return "jpeg";
+    public static String bytesImgOCR(byte[] bytes) {
+        JSONObject res = client.basicGeneral(bytes, new HashMap<String, String>());
+        return parserResponseResult(res);
     }
-    if (urlS.contains("png")) {
-      return "png";
+
+    public static String fileImgOCR(File file) {
+        JSONObject res = client.basicGeneral(file.getPath(), new HashMap<String, String>());
+        return parserResponseResult(res);
     }
-    if (urlS.contains("gif")) {
-      return "gif";
+
+    public static String urlImgOCR(URL url) {
+        JSONObject res = client.basicGeneralUrl(url.getPath(), new HashMap<String, String>());
+        return parserResponseResult(res);
     }
-    if (urlS.contains("jpg")) {
-      return "jpg";
+
+    private static String getDateKey() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        String dateStr = simpleDateFormat.format(date);
+        Random rm = new Random();
+        return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
     }
-    if (urlS.contains("bmp")) {
-      return "bmp";
+
+    private static String getImgType(URL url) {
+        String urlS = url.toString();
+        if (urlS.contains("jpeg")) {
+            return "jpeg";
+        }
+        if (urlS.contains("png")) {
+            return "png";
+        }
+        if (urlS.contains("gif")) {
+            return "gif";
+        }
+        if (urlS.contains("jpg")) {
+            return "jpg";
+        }
+        if (urlS.contains("bmp")) {
+            return "bmp";
+        }
+        return "unknown";
     }
-    return "unknown";
-  }
 
 
-  private static String parserResponseResult(JSONObject res) {
-    StringBuilder lastResult = new StringBuilder();
-    // System.out.println(res.toString(2));
-    JSONArray jsonarray = res.getJSONArray("words_result");
-    // if (jsonarray == null)
-    for (Object o : jsonarray) {
-      JSONObject wordJson = (JSONObject) o;
-      lastResult.append(wordJson.get("words")).append("\n");
+    private static String parserResponseResult(JSONObject res) {
+        StringBuilder lastResult = new StringBuilder();
+        // System.out.println(res.toString(2));
+        JSONArray jsonarray = res.getJSONArray("words_result");
+        // if (jsonarray == null)
+        for (Object o : jsonarray) {
+            JSONObject wordJson = (JSONObject) o;
+            lastResult.append(wordJson.get("words")).append("\n");
+        }
+        return lastResult.toString();
     }
-    return lastResult.toString();
-  }
 }

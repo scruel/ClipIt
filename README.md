@@ -49,7 +49,6 @@ ClipIt 是基于 Java 的一个剪贴板小工具，不仅限于剪贴板云上�
 如不特殊注明，所有模块都以此协议授权使用。若有意愿软件化本项目，欢迎联系。
 
 GitHub: https://github.com/scruel/ClipIt
-
 作者: Scruel
 
 联系邮箱: scruel@vip.qq.com
