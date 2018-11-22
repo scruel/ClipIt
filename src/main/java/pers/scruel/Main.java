@@ -17,6 +17,17 @@ import java.util.Objects;
 @SuppressWarnings("unchecked")
 public class Main {
     public static void main(String[] args) throws AWTException {
+        // 尝试加载配置文件
+        try {
+            PropertiesUtils.getProperties().getProperty("window.tips");
+            PropertiesUtils.getProperties().getProperty("combination.key");
+        } catch (IOException ignore) {
+            TipsFrame tipsFrame = new TipsFrame();
+            tipsFrame.setVisible(true);
+            tipsFrame.finish("配置加载失败!", 5000, true);
+            System.exit(1);
+        }
+
         TipsFrame tipsFrame = new TipsFrame();
         // 试探加载 32/64 位系统 dll
         try {
@@ -34,15 +45,6 @@ public class Main {
                 tipsFrame.finish("加载热键相关 dll 失败", 5000, true);
                 System.exit(1);
             }
-        }
-        // 加载配置文件
-        try {
-            PropertiesUtils.getProperties().getProperty("window.tips");
-            PropertiesUtils.getProperties().getProperty("combination.key");
-        } catch (IOException ignore) {
-            tipsFrame.setVisible(true);
-            tipsFrame.finish("配置加载失败!", 5000, true);
-            System.exit(1);
         }
         // TODO 更新热键绑定
         GlobalHotkeyListener hotkeyListener = new GlobalHotkeyListener(tipsFrame);

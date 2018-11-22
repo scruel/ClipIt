@@ -30,7 +30,7 @@ public class BaseAction implements ActionListener {
     @Override
     public void actionFailed() {
         failedSum++;
-        frame.updateJLable((failedSum + succeedSum), totalSum);
+        frame.updateJLabel((failedSum + succeedSum), totalSum);
         if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
             actionCompleted();
         }
@@ -39,7 +39,7 @@ public class BaseAction implements ActionListener {
     @Override
     public void actionSucceed() {
         succeedSum++;
-        frame.updateJLable((failedSum + succeedSum), totalSum);
+        frame.updateJLabel((failedSum + succeedSum), totalSum);
         if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
             actionCompleted();
         }
@@ -68,7 +68,7 @@ public class BaseAction implements ActionListener {
     public void updateActionSum(int sum) {
         if (sum == 0) actionCompleted();
         this.totalSum = sum;
-        frame.updateJLable(0, totalSum);
+        frame.updateJLabel(0, totalSum);
     }
 
     @Override
