@@ -3,6 +3,7 @@ package pers.scruel.thread;
 
 import pers.scruel.listener.BaseAction;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 
@@ -35,6 +36,9 @@ public abstract class BaseThread extends Thread {
             }
             else if (uploadObj instanceof URL) {
                 runWithURL((URL) uploadObj);
+            }
+            else if (uploadObj instanceof Image) {
+                runWithImage((Image) uploadObj);
             }
             else if (uploadObj instanceof byte[]) {
                 runWithBytes((byte[]) uploadObj);
@@ -70,4 +74,12 @@ public abstract class BaseThread extends Thread {
      * @throws Exception
      */
     abstract void runWithBytes(byte[] bytes) throws Exception;
+
+    /**
+     * process data of {@link Image} type.
+     *
+     * @param image
+     * @throws Exception
+     */
+    abstract void runWithImage(Image image) throws Exception;
 }

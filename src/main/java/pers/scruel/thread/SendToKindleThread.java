@@ -6,6 +6,7 @@ import pers.scruel.util.IOUtils;
 import pers.scruel.util.MailUtils;
 import pers.scruel.util.PropertiesUtils;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 
@@ -48,6 +49,11 @@ public class SendToKindleThread extends BaseThread {
 
     @Override
     void runWithBytes(byte[] bytes) {
+
+    }
+
+    @Override
+    void runWithImage(Image image) throws Exception {
 
     }
 }

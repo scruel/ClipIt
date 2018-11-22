@@ -3,6 +3,7 @@ package pers.scruel.thread;
 import pers.scruel.listener.BaseAction;
 import pers.scruel.util.QiNiuUtils;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 
@@ -27,6 +28,10 @@ public class UploadThread extends BaseThread {
 
     @Override
     void runWithBytes(byte[] bytes) throws Exception {
-        action.appendResult(QiNiuUtils.uploadByBytes(bytes));
+    }
+
+    @Override
+    void runWithImage(Image image) throws Exception {
+        action.appendResult(QiNiuUtils.uploadByImage(image));
     }
 }

@@ -4,6 +4,7 @@ import com.baidu.aip.ocr.AipOcr;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -37,8 +38,9 @@ public class BaiduOCRUtils {
         client = new AipOcr(apiId, apiKey, secretKey);
     }
 
-    public static String bytesImgOCR(byte[] bytes) {
-        JSONObject res = client.basicGeneral(bytes, new HashMap<String, String>());
+    public static String imageImgOCR(Image image) {
+        byte[] imgBytes = IOUtils.getImgBytes(image);
+        JSONObject res = client.basicGeneral(imgBytes, new HashMap<String, String>());
         return parserResponseResult(res);
     }
 
