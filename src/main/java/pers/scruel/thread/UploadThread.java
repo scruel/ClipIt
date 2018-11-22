@@ -11,22 +11,22 @@ import java.net.URL;
  */
 public class UploadThread extends BaseThread {
 
-  public UploadThread(Object uploadObj, BaseAction action) {
-    super(uploadObj, action);
-  }
+    public UploadThread(Object uploadObj, BaseAction action) {
+        super(uploadObj, action);
+    }
 
-  @Override
-  void runWithFile(File file) throws Exception {
-    action.appendResult(QiNiuUtils.fileUpload(file));
-  }
+    @Override
+    void runWithFile(File file) throws Exception {
+        action.appendResult(QiNiuUtils.fileUpload(file));
+    }
 
-  @Override
-  void runWithURL(URL url) throws Exception {
-    action.appendResult(QiNiuUtils.urlImgUpload(url));
-  }
+    @Override
+    void runWithURL(URL url) throws Exception {
+        action.appendResult(QiNiuUtils.urlImgUpload(url));
+    }
 
-  @Override
-  void runWithBytes(byte[] bytes) throws Exception {
-    action.appendResult(QiNiuUtils.uploadByBytes(bytes));
-  }
+    @Override
+    void runWithBytes(byte[] bytes) throws Exception {
+        action.appendResult(QiNiuUtils.uploadByBytes(bytes));
+    }
 }

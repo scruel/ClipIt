@@ -20,54 +20,54 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class UploadProcessor extends BaseProcessor {
-  private final String title = "uploading";
+    private final String title = "uploading";
 
-  public UploadProcessor(TipsFrame tipsFrame) {
-    super(tipsFrame, UploadThread.class);
-    this.setActionListener(new PasteAction(tipsFrame));
-  }
+    public UploadProcessor(TipsFrame tipsFrame) {
+        super(tipsFrame, UploadThread.class);
+        this.setActionListener(new PasteAction(tipsFrame));
+    }
 
-  @Override
-  void htmlProcess(String data) throws Exception {
-    Document doc = Jsoup.parse(data);
-    Elements elements = doc.select("img");
-    updateActionSum(elements.size());
-    for (Element element : elements) {
-      String filePath = element.attr("src");
-      // new Thread(() -> QiNiuUtils.fileUpload(new File(filePath))).start();
-      if (filePath.matches("[a-zA-Z]:.*")) {
-        startThread(new File(filePath));
-      }
-      else if (filePath.startsWith("http")) {
-        try {
-          startThread(new URL(filePath));
-        } catch (MalformedURLException e) {
-          e.printStackTrace();
+    @Override
+    void htmlProcess(String data) throws Exception {
+        Document doc = Jsoup.parse(data);
+        Elements elements = doc.select("img");
+        updateActionSum(elements.size());
+        for (Element element : elements) {
+            String filePath = element.attr("src");
+            // new Thread(() -> QiNiuUtils.fileUpload(new File(filePath))).start();
+            if (filePath.matches("[a-zA-Z]:.*")) {
+                startThread(new File(filePath));
+            }
+            else if (filePath.startsWith("http")) {
+                try {
+                    startThread(new URL(filePath));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                notifyActionSucceed();
+            }
         }
-      }
-      else {
-        notifyActionSucceed();
-      }
     }
-  }
 
-  @Override
-  void imageProcess(Image data) throws Exception {
-    byte[] imgBytes = IOUtils.getImgBytes(data);
-    updateActionSum(1);
-    startThread(imgBytes);
-  }
-
-  @Override
-  void fileListProcess(List<File> data) throws Exception {
-    updateActionSum(data.size());
-    for (File file : data) {
-      startThread(file);
+    @Override
+    void imageProcess(Image data) throws Exception {
+        byte[] imgBytes = IOUtils.getImgBytes(data);
+        updateActionSum(1);
+        startThread(imgBytes);
     }
-  }
 
-  @Override
-  String getTitle() {
-    return title;
-  }
+    @Override
+    void fileListProcess(List<File> data) throws Exception {
+        updateActionSum(data.size());
+        for (File file : data) {
+            startThread(file);
+        }
+    }
+
+    @Override
+    String getTitle() {
+        return title;
+    }
 }

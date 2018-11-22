@@ -15,59 +15,59 @@ import java.net.URL;
  * @author Scruel Tao <scruel@vip.qq.com>
  */
 public abstract class BaseThread extends Thread {
-  protected Object uploadObj;
-  protected BaseAction action;
+    protected Object uploadObj;
+    protected BaseAction action;
 
-  public BaseThread(Object uploadObj, BaseAction action) {
-    this.uploadObj = uploadObj;
-    this.action = action;
-  }
-
-  @Override
-  public void run() {
-    doRun();
-  }
-
-  public void doRun() {
-    try {
-      if (uploadObj instanceof File) {
-        runWithFile((File) uploadObj);
-      }
-      else if (uploadObj instanceof URL) {
-        runWithURL((URL) uploadObj);
-      }
-      else if (uploadObj instanceof byte[]) {
-        runWithBytes((byte[]) uploadObj);
-      }
-    } catch (Exception ignore) {
-      // e.printStackTrace();
-      action.actionFailed();
-      return;
+    public BaseThread(Object uploadObj, BaseAction action) {
+        this.uploadObj = uploadObj;
+        this.action = action;
     }
-    action.actionSucceed();
-  }
 
-  /**
-   * process data of {@link File} type.
-   *
-   * @param file
-   * @throws Exception
-   */
-  abstract void runWithFile(File file) throws Exception;
+    @Override
+    public void run() {
+        doRun();
+    }
 
-  /**
-   * process data of {@link URL} type.
-   *
-   * @param url
-   * @throws Exception
-   */
-  abstract void runWithURL(URL url) throws Exception;
+    public void doRun() {
+        try {
+            if (uploadObj instanceof File) {
+                runWithFile((File) uploadObj);
+            }
+            else if (uploadObj instanceof URL) {
+                runWithURL((URL) uploadObj);
+            }
+            else if (uploadObj instanceof byte[]) {
+                runWithBytes((byte[]) uploadObj);
+            }
+        } catch (Exception ignore) {
+            // e.printStackTrace();
+            action.actionFailed();
+            return;
+        }
+        action.actionSucceed();
+    }
 
-  /**
-   * process data of byte array type.
-   *
-   * @param bytes
-   * @throws Exception
-   */
-  abstract void runWithBytes(byte[] bytes) throws Exception;
+    /**
+     * process data of {@link File} type.
+     *
+     * @param file
+     * @throws Exception
+     */
+    abstract void runWithFile(File file) throws Exception;
+
+    /**
+     * process data of {@link URL} type.
+     *
+     * @param url
+     * @throws Exception
+     */
+    abstract void runWithURL(URL url) throws Exception;
+
+    /**
+     * process data of byte array type.
+     *
+     * @param bytes
+     * @throws Exception
+     */
+    abstract void runWithBytes(byte[] bytes) throws Exception;
 }
