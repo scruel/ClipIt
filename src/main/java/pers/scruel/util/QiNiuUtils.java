@@ -10,10 +10,7 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -53,8 +50,16 @@ public class QiNiuUtils {
 
     public static String uploadByImage(Image image) throws Exception {
         byte[] imgBytes = IOUtils.getImgBytes(image);
-        String key = getDateKey() + "clipboard" + ".png";
-        Response response = uploadManager.put(imgBytes, key, upToken);
+        String fname = getDateKey() + "clipboard" + ".png";
+        if ("true".equals(PropertiesUtils.getProperties().getProperty("local.save"))) {
+            String pathname = PropertiesUtils.getProperties().getProperty("local.pathname");
+            File saveFile = new File(pathname + "/" + fname);
+            saveFile.getParentFile().mkdirs();
+            try (FileOutputStream out = new FileOutputStream(saveFile)) {
+                out.write(imgBytes);
+            }
+        }
+        Response response = uploadManager.put(imgBytes, fname, upToken);
         return parserQiniuResponseResult(response);
     }
 
