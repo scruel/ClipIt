@@ -51,22 +51,11 @@ public class QiNiuUtils {
         uploadManager = new UploadManager(cfg);
     }
 
-    public static String uploadByImage(Image image) {
+    public static String uploadByImage(Image image) throws Exception {
         byte[] imgBytes = IOUtils.getImgBytes(image);
         String key = getDateKey() + "clipboard" + ".png";
-        try {
-            Response response = uploadManager.put(imgBytes, key, upToken);
-            return parserQiniuResponseResult(response);
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            System.err.println(r.toString());
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ignore) {
-                return "";
-            }
-            return "";
-        }
+        Response response = uploadManager.put(imgBytes, key, upToken);
+        return parserQiniuResponseResult(response);
     }
 
     public static String fileUpload(File file) {
