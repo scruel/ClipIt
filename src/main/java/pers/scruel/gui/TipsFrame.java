@@ -17,12 +17,12 @@ import java.util.Objects;
 public class TipsFrame extends JFrame {
     private static JLabel jLabel;
     private final boolean needTips = getNeedTips();
+    private final Icon icon = new ImageIcon(Objects.requireNonNull(TipsFrame.class.getClassLoader().getResource("l.gif")));
     private String labTitle = "";
 
     public TipsFrame() {
         super();
         jLabel = new JLabel();
-        Icon icon = new ImageIcon(Objects.requireNonNull(TipsFrame.class.getClassLoader().getResource("l.gif")));
         jLabel.setIcon(icon);
         JPanel jPanel = new JPanel();
         jPanel.setBackground(new Color(232, 238, 248));
@@ -38,14 +38,16 @@ public class TipsFrame extends JFrame {
                 ((int) screenSize.getHeight() - 40 - 50));
     }
 
-    public void initJlabelTitle(String labTitle) {
+    public void initJLabelTitle(String labTitle) {
         this.labTitle = labTitle;
         jLabel.setText(labTitle + "…… ");
+        jLabel.setIcon(icon);
         jLabel.repaint();
     }
 
-    public void updateJLable(int current, int total) {
+    public void updateJLabel(int current, int total) {
         jLabel.setText(String.format("%s…… %d/%d", labTitle, current, total));
+        jLabel.setIcon(icon);
         jLabel.repaint();
     }
 

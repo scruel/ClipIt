@@ -34,7 +34,7 @@ public abstract class BaseProcessor {
     }
 
     public void process() {
-        this.tipsFrame.initJlabelTitle(getTitle());
+        this.tipsFrame.initJLabelTitle(getTitle());
         Clipboard clipboard = ClipboardUtils.getClipboard();
         try {
             if (this.tipsFrame.needTips()) {
