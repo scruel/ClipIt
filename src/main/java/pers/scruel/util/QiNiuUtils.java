@@ -9,6 +9,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,10 +51,11 @@ public class QiNiuUtils {
         uploadManager = new UploadManager(cfg);
     }
 
-    public static String uploadByBytes(byte[] bytes) {
+    public static String uploadByImage(Image image) {
+        byte[] imgBytes = IOUtils.getImgBytes(image);
         String key = getDateKey() + "clipboard" + ".png";
         try {
-            Response response = uploadManager.put(bytes, key, upToken);
+            Response response = uploadManager.put(imgBytes, key, upToken);
             return parserQiniuResponseResult(response);
         } catch (QiniuException ex) {
             Response r = ex.response;

@@ -97,9 +97,6 @@ public abstract class BaseProcessor {
                 .getConstructor(new Class[]{Object.class, BaseAction.class})
                 .newInstance(new Object[]{obj, this.action});
         thread.start();
-        // while (true) {
-        //     uploadThread.isAlive();
-        // }
     }
 
     protected void updateActionSum(int size) {

@@ -7,7 +7,6 @@ import org.jsoup.select.Elements;
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.PasteAction;
 import pers.scruel.thread.UploadThread;
-import pers.scruel.util.IOUtils;
 
 import java.awt.*;
 import java.io.File;
@@ -53,9 +52,8 @@ public class UploadProcessor extends BaseProcessor {
 
     @Override
     void imageProcess(Image data) throws Exception {
-        byte[] imgBytes = IOUtils.getImgBytes(data);
         updateActionSum(1);
-        startThread(imgBytes);
+        startThread(data);
     }
 
     @Override

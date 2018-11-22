@@ -3,7 +3,6 @@ package pers.scruel.handler;
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.listener.PasteAction;
 import pers.scruel.thread.OCRThread;
-import pers.scruel.util.IOUtils;
 import pers.scruel.util.QiNiuUtils;
 
 import java.awt.*;
@@ -27,9 +26,8 @@ public class OCRProcessor extends BaseProcessor {
 
     @Override
     void imageProcess(Image data) throws Exception {
-        byte[] imgBytes = IOUtils.getImgBytes(data);
         updateActionSum(1);
-        startThread(imgBytes);
+        startThread(data);
     }
 
     @Override
