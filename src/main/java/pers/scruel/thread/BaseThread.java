@@ -44,7 +44,6 @@ public abstract class BaseThread extends Thread {
                 runWithBytes((byte[]) uploadObj);
             }
         } catch (Exception ignore) {
-            // e.printStackTrace();
             action.actionFailed();
             return;
         }

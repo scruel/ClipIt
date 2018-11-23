@@ -41,12 +41,14 @@ public class TipsFrame extends JFrame {
     public void initJLabelTitle(String labTitle) {
         this.labTitle = labTitle;
         jLabel.setText(labTitle + "…… ");
+        jLabel.setForeground(null);
         jLabel.setIcon(icon);
         jLabel.repaint();
     }
 
     public void updateJLabel(int current, int total) {
         jLabel.setText(String.format("%s…… %d/%d", labTitle, current, total));
+        jLabel.setForeground(null);
         jLabel.setIcon(icon);
         jLabel.repaint();
     }

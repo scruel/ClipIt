@@ -65,45 +65,26 @@ public class QiNiuUtils {
         return parserQiniuResponseResult(response);
     }
 
-    public static String fileUpload(File file) {
+    public static String fileUpload(File file) throws QiniuException {
         String localFilePath = file.getPath();
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = getDateKey() + file.getName();
-        try {
-            Response response = uploadManager.put(localFilePath, key, getToken());
-            return parserQiniuResponseResult(response);
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            System.err.println(r.toString());
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ignore) {
-                return "";
-            }
-            return "";
-        }
+        Response response = uploadManager.put(localFilePath, key, getToken());
+        return parserQiniuResponseResult(response);
     }
 
-    public static String streamUpload(InputStream in) {
+    public static String streamUpload(InputStream in) throws QiniuException {
         String key = getDateKey() + "clipboard" + ".png";
-        try {
-            Response response = uploadManager.put(in, key, getToken(), null, null);
-            return parserQiniuResponseResult(response);
-        } catch (QiniuException ignore) {
-            return "";
-        }
+        Response response = uploadManager.put(in, key, getToken(), null, null);
+        return parserQiniuResponseResult(response);
     }
 
-    public static String urlImgUpload(URL url) {
+    public static String urlImgUpload(URL url) throws IOException {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = getDateKey() + "net." + getImgType(url);
-        try {
-            URLConnection conn = url.openConnection();
-            Response response = uploadManager.put(conn.getInputStream(), key, getToken(), null, null);
-            return parserQiniuResponseResult(response);
-        } catch (IOException ignore) {
-            return "";
-        }
+        URLConnection conn = url.openConnection();
+        Response response = uploadManager.put(conn.getInputStream(), key, getToken(), null, null);
+        return parserQiniuResponseResult(response);
     }
 
     private static String getDateKey() {
