@@ -24,7 +24,6 @@ import java.util.Random;
  */
 public class QiNiuUtils {
     private static UploadManager uploadManager;
-    private static String upToken;
     private static String accessKey;
     private static String secretKey;
     private static String bucket;
@@ -42,10 +41,13 @@ public class QiNiuUtils {
         secretKey = properties.getProperty("qiniu.secret.key");
         bucket = properties.getProperty("qiniu.bucket");
         bucketDomain = properties.getProperty("qiniu.bucket.domain");
-        Auth auth = Auth.create(accessKey, secretKey);
-        upToken = auth.uploadToken(bucket);
         Configuration cfg = new Configuration(Zone.autoZone());
         uploadManager = new UploadManager(cfg);
+    }
+
+    private static String getToken() {
+        Auth auth = Auth.create(accessKey, secretKey);
+        return auth.uploadToken(bucket);
     }
 
     public static String uploadByImage(Image image) throws Exception {
@@ -59,7 +61,7 @@ public class QiNiuUtils {
                 out.write(imgBytes);
             }
         }
-        Response response = uploadManager.put(imgBytes, fname, upToken);
+        Response response = uploadManager.put(imgBytes, fname, getToken());
         return parserQiniuResponseResult(response);
     }
 
@@ -68,7 +70,7 @@ public class QiNiuUtils {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = getDateKey() + file.getName();
         try {
-            Response response = uploadManager.put(localFilePath, key, upToken);
+            Response response = uploadManager.put(localFilePath, key, getToken());
             return parserQiniuResponseResult(response);
         } catch (QiniuException ex) {
             Response r = ex.response;
@@ -85,7 +87,7 @@ public class QiNiuUtils {
     public static String streamUpload(InputStream in) {
         String key = getDateKey() + "clipboard" + ".png";
         try {
-            Response response = uploadManager.put(in, key, upToken, null, null);
+            Response response = uploadManager.put(in, key, getToken(), null, null);
             return parserQiniuResponseResult(response);
         } catch (QiniuException ignore) {
             return "";
@@ -97,7 +99,7 @@ public class QiNiuUtils {
         String key = getDateKey() + "net." + getImgType(url);
         try {
             URLConnection conn = url.openConnection();
-            Response response = uploadManager.put(conn.getInputStream(), key, upToken, null, null);
+            Response response = uploadManager.put(conn.getInputStream(), key, getToken(), null, null);
             return parserQiniuResponseResult(response);
         } catch (IOException ignore) {
             return "";
