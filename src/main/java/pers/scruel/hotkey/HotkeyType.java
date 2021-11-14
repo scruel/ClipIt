@@ -11,7 +11,7 @@ import java.util.Arrays;
 public enum HotkeyType {
     UPLOAD("upload", 0, JIntellitype.MOD_CONTROL + JIntellitype.MOD_SHIFT, 'V'),
     OCR("ocr", 1, JIntellitype.MOD_CONTROL + JIntellitype.MOD_SHIFT, 'O'),
-    SEND_TO_KIND("sendtokindle", 2, JIntellitype.MOD_CONTROL + JIntellitype.MOD_SHIFT, 'K');
+    SEND_TO_KIND("sendtokindle", 2, JIntellitype.MOD_CONTROL + JIntellitype.MOD_SHIFT + JIntellitype.MOD_ALT, 'K');
 
     private String name;
     private int identifier;

@@ -40,17 +40,17 @@ public class BaiduOCRUtils {
 
     public static String imageImgOCR(Image image) {
         byte[] imgBytes = IOUtils.getImgBytes(image);
-        JSONObject res = client.basicGeneral(imgBytes, new HashMap<String, String>());
+        JSONObject res = client.basicGeneral(imgBytes, new HashMap<>());
         return parserResponseResult(res);
     }
 
     public static String fileImgOCR(File file) {
-        JSONObject res = client.basicGeneral(file.getPath(), new HashMap<String, String>());
+        JSONObject res = client.basicGeneral(file.getPath(), new HashMap<>());
         return parserResponseResult(res);
     }
 
     public static String urlImgOCR(URL url) {
-        JSONObject res = client.basicGeneralUrl(url.getPath(), new HashMap<String, String>());
+        JSONObject res = client.basicGeneralUrl(url.getPath(), new HashMap<>());
         return parserResponseResult(res);
     }
 
@@ -59,7 +59,7 @@ public class BaiduOCRUtils {
         Date date = new Date();
         String dateStr = simpleDateFormat.format(date);
         Random rm = new Random();
-        return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
+        return dateStr + "_" + rm.nextInt(160800) + "_";
     }
 
     private static String getImgType(URL url) {

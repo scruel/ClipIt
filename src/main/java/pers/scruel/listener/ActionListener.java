@@ -12,6 +12,8 @@ public interface ActionListener {
      */
     void actionFailed();
 
+    void actionFailed(Exception e);
+
     /**
      * Invoked when operation action has succeed.
      */

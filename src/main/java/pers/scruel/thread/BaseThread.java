@@ -33,18 +33,15 @@ public abstract class BaseThread extends Thread {
         try {
             if (uploadObj instanceof File) {
                 runWithFile((File) uploadObj);
-            }
-            else if (uploadObj instanceof URL) {
+            } else if (uploadObj instanceof URL) {
                 runWithURL((URL) uploadObj);
-            }
-            else if (uploadObj instanceof Image) {
+            } else if (uploadObj instanceof Image) {
                 runWithImage((Image) uploadObj);
-            }
-            else if (uploadObj instanceof byte[]) {
+            } else if (uploadObj instanceof byte[]) {
                 runWithBytes((byte[]) uploadObj);
             }
-        } catch (Exception ignore) {
-            action.actionFailed();
+        } catch (Exception e) {
+            action.actionFailed(e);
             return;
         }
         action.actionSucceed();

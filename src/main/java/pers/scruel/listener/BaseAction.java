@@ -37,6 +37,15 @@ public class BaseAction implements ActionListener {
     }
 
     @Override
+    public void actionFailed(Exception e) {
+        failedSum++;
+        frame.updateJLabel((failedSum + succeedSum), totalSum, e.getMessage());
+        if (totalSum == 0 || totalSum == (failedSum + succeedSum)) {
+            actionCompleted();
+        }
+    }
+
+    @Override
     public void actionSucceed() {
         succeedSum++;
         frame.updateJLabel((failedSum + succeedSum), totalSum);
