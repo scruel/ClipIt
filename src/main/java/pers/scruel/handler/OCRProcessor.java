@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class OCRProcessor extends BaseProcessor {
     private final String title = "OCRing";

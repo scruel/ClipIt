@@ -12,7 +12,7 @@ import pers.scruel.gui.TipsFrame;
  * Note: synchronized method or atom variable seems not necessary
  * for this class, so I didn't use them.
  *
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class BaseAction implements ActionListener {
     private final int succeedTipsDelay = 1300;

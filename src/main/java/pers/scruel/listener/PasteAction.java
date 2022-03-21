@@ -7,7 +7,7 @@ import pers.scruel.util.PropertiesUtils;
 import java.io.IOException;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class PasteAction extends BaseAction {
     public PasteAction(TipsFrame frame) {

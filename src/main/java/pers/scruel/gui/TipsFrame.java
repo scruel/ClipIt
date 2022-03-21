@@ -12,7 +12,7 @@ import java.util.Objects;
  * A simple bubble tip frame window that displays the processing status
  * and result messages.
  *
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class TipsFrame extends JFrame {
   private static JLabel jLabel;

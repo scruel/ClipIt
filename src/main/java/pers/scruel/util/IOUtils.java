@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class IOUtils {
 

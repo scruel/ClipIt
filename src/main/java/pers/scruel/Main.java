@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 @SuppressWarnings("unchecked")
 public class Main {
@@ -74,7 +74,7 @@ public class Main {
         System.err.println();
         System.err.println("GitHub: https://github.com/scruel/ClipIt");
         System.err.println("Author: Scruel");
-        System.err.println("Email: scruel@vip.qq.com");
+        System.err.println("Email: scruelt@hotmail.com");
         System.err.println("****************************************");
         System.err.println();
         System.err.println("Usage: ClipIt command");

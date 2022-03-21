@@ -4,7 +4,7 @@ import pers.scruel.util.PropertiesUtils;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 
 public class DebugTest {

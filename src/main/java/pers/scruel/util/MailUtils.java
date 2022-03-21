@@ -11,7 +11,7 @@ import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class MailUtils {
     private MimeMessage message;

@@ -13,7 +13,7 @@ import java.net.URL;
  * This class will process specific type of data, like {@link File} etc., as follows, by
  * specific method which should and will be implement by subclasses.
  *
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public abstract class BaseThread extends Thread {
     protected Object uploadObj;

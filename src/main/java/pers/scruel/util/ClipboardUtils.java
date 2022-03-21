@@ -7,7 +7,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class ClipboardUtils {
     public static void setClipBoard(String text) {

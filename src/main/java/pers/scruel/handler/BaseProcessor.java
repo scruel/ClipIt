@@ -20,7 +20,7 @@ import java.util.List;
  * Subclasses should split data to parts to the type which can be process by {@link BaseThread}
  * and then invoke {@link #startThread(Object)} method to process it via starting threads.
  *
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 @SuppressWarnings("unchecked")
 public abstract class BaseProcessor {

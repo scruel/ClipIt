@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 @SuppressWarnings("unchecked")
 public class UploadProcessor extends BaseProcessor {

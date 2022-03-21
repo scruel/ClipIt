@@ -20,7 +20,7 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class QiNiuUtils {
   private static UploadManager uploadManager;

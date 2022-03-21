@@ -1,7 +1,7 @@
 package pers.scruel.util;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class StringUtils {
     private StringUtils() {

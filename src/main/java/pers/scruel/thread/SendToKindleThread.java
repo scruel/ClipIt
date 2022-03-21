@@ -11,7 +11,7 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class SendToKindleThread extends BaseThread {
     private String path = "tools/kindle";

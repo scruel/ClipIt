@@ -7,7 +7,7 @@ import java.util.Properties;
 /**
  * Loads properties.
  *
- * @author Scruel Tao <scruel@vip.qq.com>
+ * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class PropertiesUtils {
     private static final Properties properties = new Properties();
