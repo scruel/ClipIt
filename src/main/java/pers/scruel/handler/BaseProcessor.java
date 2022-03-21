@@ -26,9 +26,9 @@ import java.util.List;
 public abstract class BaseProcessor {
     private TipsFrame tipsFrame;
     private BaseAction action;
-    private Class<?> threadClazz;
+    private Class<? extends BaseThread> threadClazz;
 
-    protected BaseProcessor(TipsFrame tipsFrame, Class<?> threadClazz) {
+    protected BaseProcessor(TipsFrame tipsFrame, Class<? extends BaseThread> threadClazz) {
         this.tipsFrame = tipsFrame;
         this.threadClazz = threadClazz;
     }
@@ -50,8 +50,11 @@ public abstract class BaseProcessor {
                 htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
             }
             else {
-                this.action.actionCompleted();
-                return;
+                if (!clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+                    this.action.actionCompleted();
+                    return;
+                }
+                this.stringProcess((String) clipboard.getData(DataFlavor.stringFlavor));
             }
             if (this.action.getTotalSum() == 0) {
                 this.action.actionCompleted();
@@ -62,10 +65,9 @@ public abstract class BaseProcessor {
     }
 
     public void setActionListener(BaseAction l) {
-        if (l == null) {
-            return;
+        if (l != null) {
+            this.action = l;
         }
-        this.action = l;
     }
 
     /**
@@ -75,6 +77,14 @@ public abstract class BaseProcessor {
      * @throws Exception
      */
     abstract void htmlProcess(String data) throws Exception;
+
+    /**
+     * Processes string type data from clipboard.
+     *
+     * @param data
+     * @throws Exception
+     */
+    abstract void stringProcess(String data) throws Exception;
 
     /**
      * Processes image type data from clipboard.
@@ -94,8 +104,8 @@ public abstract class BaseProcessor {
 
     public void startThread(Object obj) throws Exception {
         BaseThread thread = (BaseThread) this.threadClazz
-                .getConstructor(new Class[]{Object.class, BaseAction.class})
-                .newInstance(new Object[]{obj, this.action});
+                .getConstructor(Object.class, BaseAction.class)
+                .newInstance(obj, this.action);
         thread.start();
     }
 

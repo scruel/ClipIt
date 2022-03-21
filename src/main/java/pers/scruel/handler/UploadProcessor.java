@@ -19,7 +19,7 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class UploadProcessor extends BaseProcessor {
-    private final String title = "uploading";
+    private final static String TITLE = "uploading";
 
     public UploadProcessor(TipsFrame tipsFrame) {
         super(tipsFrame, UploadThread.class);
@@ -51,6 +51,13 @@ public class UploadProcessor extends BaseProcessor {
     }
 
     @Override
+    void stringProcess(String data) throws Exception {
+        if (data.startsWith("http")) {
+            startThread(new URL(data));
+        }
+    }
+
+    @Override
     void imageProcess(Image data) throws Exception {
         updateActionSum(1);
         startThread(data);
@@ -66,6 +73,6 @@ public class UploadProcessor extends BaseProcessor {
 
     @Override
     String getTitle() {
-        return title;
+        return TITLE;
     }
 }

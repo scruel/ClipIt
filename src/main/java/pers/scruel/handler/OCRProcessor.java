@@ -13,7 +13,7 @@ import java.util.List;
  * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class OCRProcessor extends BaseProcessor {
-    private final String title = "OCRing";
+    private static final String TITLE = "OCRing";
 
     public OCRProcessor(TipsFrame tipsFrame) {
         super(tipsFrame, OCRThread.class);
@@ -22,6 +22,10 @@ public class OCRProcessor extends BaseProcessor {
 
     @Override
     void htmlProcess(String data) throws Exception {
+    }
+
+    @Override
+    void stringProcess(String data) throws Exception {
     }
 
     @Override
@@ -45,6 +49,6 @@ public class OCRProcessor extends BaseProcessor {
 
     @Override
     String getTitle() {
-        return title;
+        return TITLE;
     }
 }

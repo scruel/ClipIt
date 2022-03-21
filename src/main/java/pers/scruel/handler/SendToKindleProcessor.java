@@ -12,7 +12,7 @@ import java.util.List;
  * @author Scruel Tao <scruelt@hotmail.com>
  */
 public class SendToKindleProcessor extends BaseProcessor {
-    private final String title = "sending";
+    private static final String TITLE = "sending";
 
     public SendToKindleProcessor(TipsFrame tipsFrame) {
         super(tipsFrame, SendToKindleThread.class);
@@ -21,6 +21,10 @@ public class SendToKindleProcessor extends BaseProcessor {
 
     @Override
     void htmlProcess(String data) throws Exception {
+    }
+
+    @Override
+    void stringProcess(String data) throws Exception {
     }
 
     @Override
@@ -43,7 +47,7 @@ public class SendToKindleProcessor extends BaseProcessor {
 
     @Override
     String getTitle() {
-        return title;
+        return TITLE;
     }
 }
 
