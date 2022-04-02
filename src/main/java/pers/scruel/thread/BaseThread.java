@@ -1,6 +1,5 @@
 package pers.scruel.thread;
 
-
 import pers.scruel.listener.BaseAction;
 
 import java.awt.*;
@@ -13,69 +12,72 @@ import java.net.URL;
  * This class will process specific type of data, like {@link File} etc., as follows, by
  * specific method which should and will be implement by subclasses.
  *
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 public abstract class BaseThread extends Thread {
-    protected Object uploadObj;
-    protected BaseAction action;
+  protected Object uploadObj;
+  protected BaseAction action;
 
-    public BaseThread(Object uploadObj, BaseAction action) {
-        this.uploadObj = uploadObj;
-        this.action = action;
+  public BaseThread(Object uploadObj, BaseAction action) {
+    this.uploadObj = uploadObj;
+    this.action = action;
+  }
+
+  @Override
+  public void run() {
+    doRun();
+  }
+
+  public void doRun() {
+    try {
+      if (uploadObj instanceof File) {
+        runWithFile((File) uploadObj);
+      }
+      else if (uploadObj instanceof URL) {
+        runWithURL((URL) uploadObj);
+      }
+      else if (uploadObj instanceof Image) {
+        runWithImage((Image) uploadObj);
+      }
+      else if (uploadObj instanceof byte[]) {
+        runWithBytes((byte[]) uploadObj);
+      }
+    } catch (Exception e) {
+      action.actionFailed(e);
+      return;
     }
+    action.actionSucceed();
+  }
 
-    @Override
-    public void run() {
-        doRun();
-    }
+  /**
+   * process data of {@link File} type.
+   *
+   * @param file
+   * @throws Exception
+   */
+  abstract void runWithFile(File file) throws Exception;
 
-    public void doRun() {
-        try {
-            if (uploadObj instanceof File) {
-                runWithFile((File) uploadObj);
-            } else if (uploadObj instanceof URL) {
-                runWithURL((URL) uploadObj);
-            } else if (uploadObj instanceof Image) {
-                runWithImage((Image) uploadObj);
-            } else if (uploadObj instanceof byte[]) {
-                runWithBytes((byte[]) uploadObj);
-            }
-        } catch (Exception e) {
-            action.actionFailed(e);
-            return;
-        }
-        action.actionSucceed();
-    }
+  /**
+   * process data of {@link URL} type.
+   *
+   * @param url
+   * @throws Exception
+   */
+  abstract void runWithURL(URL url) throws Exception;
 
-    /**
-     * process data of {@link File} type.
-     *
-     * @param file
-     * @throws Exception
-     */
-    abstract void runWithFile(File file) throws Exception;
+  /**
+   * process data of byte array type.
+   *
+   * @param bytes
+   * @throws Exception
+   */
+  abstract void runWithBytes(byte[] bytes) throws Exception;
 
-    /**
-     * process data of {@link URL} type.
-     *
-     * @param url
-     * @throws Exception
-     */
-    abstract void runWithURL(URL url) throws Exception;
-
-    /**
-     * process data of byte array type.
-     *
-     * @param bytes
-     * @throws Exception
-     */
-    abstract void runWithBytes(byte[] bytes) throws Exception;
-
-    /**
-     * process data of {@link Image} type.
-     *
-     * @param image
-     * @throws Exception
-     */
-    abstract void runWithImage(Image image) throws Exception;
+  /**
+   * process data of {@link Image} type.
+   *
+   * @param image
+   * @throws Exception
+   */
+  abstract void runWithImage(Image image) throws Exception;
 }

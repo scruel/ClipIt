@@ -7,23 +7,23 @@ import pers.scruel.util.PropertiesUtils;
 import java.io.IOException;
 
 /**
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 public class PasteAction extends BaseAction {
-    public PasteAction(TipsFrame frame) {
-        super(frame);
-    }
+  public PasteAction(TipsFrame frame) {
+    super(frame);
+  }
 
-    @Override
-    public void afterActionCompleted() {
-        if (super.getSucceedSum() > 0) {
-            ClipboardUtils.setClipBoard(getResult().toString());
-            try {
-                if (!"false".equals(PropertiesUtils.getProperties().getProperty("auto.paste"))) {
-                    ClipboardUtils.paste();
-                }
-            } catch (IOException ignore) {
-            }
+  @Override
+  public void afterActionCompleted() {
+    if (super.getSucceedSum() > 0) {
+      ClipboardUtils.setClipBoard(getResult().toString());
+      try {
+        if (!"false".equals(PropertiesUtils.getProperties().getProperty("auto.paste"))) {
+          ClipboardUtils.paste();
         }
+      } catch (IOException ignore) {
+      }
     }
+  }
 }

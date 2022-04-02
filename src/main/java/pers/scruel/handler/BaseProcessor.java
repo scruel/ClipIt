@@ -20,106 +20,106 @@ import java.util.List;
  * Subclasses should split data to parts to the type which can be process by {@link BaseThread}
  * and then invoke {@link #startThread(Object)} method to process it via starting threads.
  *
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 @SuppressWarnings("unchecked")
 public abstract class BaseProcessor {
-    private TipsFrame tipsFrame;
-    private BaseAction action;
-    private Class<? extends BaseThread> threadClazz;
+  private TipsFrame tipsFrame;
+  private BaseAction action;
+  private Class<? extends BaseThread> threadClazz;
 
-    protected BaseProcessor(TipsFrame tipsFrame, Class<? extends BaseThread> threadClazz) {
-        this.tipsFrame = tipsFrame;
-        this.threadClazz = threadClazz;
-    }
+  protected BaseProcessor(TipsFrame tipsFrame, Class<? extends BaseThread> threadClazz) {
+    this.tipsFrame = tipsFrame;
+    this.threadClazz = threadClazz;
+  }
 
-    public void process() {
-        this.tipsFrame.initJLabelTitle(getTitle());
-        Clipboard clipboard = ClipboardUtils.getClipboard();
-        try {
-            if (this.tipsFrame.needTips()) {
-                this.tipsFrame.setVisible(true);
-            }
-            if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
-                fileListProcess((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
-            }
-            else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
-                imageProcess((Image) clipboard.getData(DataFlavor.imageFlavor));
-            }
-            else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
-                htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
-            }
-            else {
-                if (!clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                    this.action.actionCompleted();
-                    return;
-                }
-                this.stringProcess((String) clipboard.getData(DataFlavor.stringFlavor));
-            }
-            if (this.action.getTotalSum() == 0) {
-                this.action.actionCompleted();
-            }
-        } catch (Exception ignore) {
-            // e.printStackTrace();
+  public void process() {
+    this.tipsFrame.initJLabelTitle(getTitle());
+    Clipboard clipboard = ClipboardUtils.getClipboard();
+    try {
+      if (this.tipsFrame.needTips()) {
+        this.tipsFrame.setVisible(true);
+      }
+      if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
+        fileListProcess((List<File>) clipboard.getData(DataFlavor.javaFileListFlavor));
+      }
+      else if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
+        imageProcess((Image) clipboard.getData(DataFlavor.imageFlavor));
+      }
+      else if (clipboard.isDataFlavorAvailable(DataFlavor.allHtmlFlavor)) {
+        htmlProcess((String) clipboard.getData(DataFlavor.allHtmlFlavor));
+      }
+      else {
+        if (!clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+          this.action.actionCompleted();
+          return;
         }
+        this.stringProcess((String) clipboard.getData(DataFlavor.stringFlavor));
+      }
+      if (this.action.getTotalSum() == 0) {
+        this.action.actionCompleted();
+      }
+    } catch (Exception ignore) {
+      // e.printStackTrace();
     }
+  }
 
-    public void setActionListener(BaseAction l) {
-        if (l != null) {
-            this.action = l;
-        }
+  public void setActionListener(BaseAction l) {
+    if (l != null) {
+      this.action = l;
     }
+  }
 
-    /**
-     * Processes html type data from clipboard.
-     *
-     * @param data
-     * @throws Exception
-     */
-    abstract void htmlProcess(String data) throws Exception;
+  /**
+   * Processes html type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void htmlProcess(String data) throws Exception;
 
-    /**
-     * Processes string type data from clipboard.
-     *
-     * @param data
-     * @throws Exception
-     */
-    abstract void stringProcess(String data) throws Exception;
+  /**
+   * Processes string type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void stringProcess(String data) throws Exception;
 
-    /**
-     * Processes image type data from clipboard.
-     *
-     * @param data
-     * @throws Exception
-     */
-    abstract void imageProcess(Image data) throws Exception;
+  /**
+   * Processes image type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void imageProcess(Image data) throws Exception;
 
-    /**
-     * Processes files type data from clipboard.
-     *
-     * @param data
-     * @throws Exception
-     */
-    abstract void fileListProcess(List<File> data) throws Exception;
+  /**
+   * Processes files type data from clipboard.
+   *
+   * @param data
+   * @throws Exception
+   */
+  abstract void fileListProcess(List<File> data) throws Exception;
 
-    public void startThread(Object obj) throws Exception {
-        BaseThread thread = (BaseThread) this.threadClazz
-                .getConstructor(Object.class, BaseAction.class)
-                .newInstance(obj, this.action);
-        thread.start();
-    }
+  public void startThread(Object obj) throws Exception {
+    BaseThread thread = (BaseThread) this.threadClazz
+        .getConstructor(Object.class, BaseAction.class)
+        .newInstance(obj, this.action);
+    thread.start();
+  }
 
-    protected void updateActionSum(int size) {
-        this.action.updateActionSum(size);
-    }
+  protected void updateActionSum(int size) {
+    this.action.updateActionSum(size);
+  }
 
-    protected void notifyActionSucceed() {
-        this.action.actionSucceed();
-    }
+  protected void notifyActionSucceed() {
+    this.action.actionSucceed();
+  }
 
-    protected void notifyActionFailed() {
-        this.action.actionFailed();
-    }
+  protected void notifyActionFailed() {
+    this.action.actionFailed();
+  }
 
-    abstract String getTitle();
+  abstract String getTitle();
 }

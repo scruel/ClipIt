@@ -20,7 +20,7 @@ import java.util.Properties;
 import java.util.Random;
 
 /**
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 public class QiNiuUtils {
   private static UploadManager uploadManager;
@@ -67,7 +67,7 @@ public class QiNiuUtils {
 
   public static String fileUpload(File file) throws QiniuException {
     String localFilePath = file.getPath();
-    //默认不指定key的情况下，以文件内容的hash值作为文件名
+    //默认不指定 key 的情况下，以文件内容的 hash 值作为文件名
     String key = getDateKey() + file.getName();
     Response response = uploadManager.put(localFilePath, key, getToken());
     return parserQiniuResponseResult(response);
@@ -80,7 +80,7 @@ public class QiNiuUtils {
   }
 
   public static String urlImgUpload(URL url) throws IOException {
-    //默认不指定key的情况下，以文件内容的hash值作为文件名
+    //默认不指定 key 的情况下，以文件内容的 hash 值作为文件名
     String key = getDateKey() + "net." + getImgType(url);
     URLConnection conn = url.openConnection();
     Response response = uploadManager.put(conn.getInputStream(), key, getToken(), null, null);
@@ -92,7 +92,7 @@ public class QiNiuUtils {
     Date date = new Date();
     String dateStr = simpleDateFormat.format(date);
     Random rm = new Random();
-    return dateStr + "_" + String.valueOf(rm.nextInt(160800)) + "_";
+    return dateStr + "_" + rm.nextInt(160800) + "_";
   }
 
   public static String getImgType(URL url) {
@@ -130,13 +130,13 @@ public class QiNiuUtils {
       prefix = prefix.replace("image", fileName);
     }
     try {
-      result = String.format("%s%s%s", prefix, bucketDomain + "/" + URLEncoder.encode(key, "utf-8").replace("+", "%20"), suffix);
+      result = String.format("%s%s%s", prefix,
+                             bucketDomain + "/" + URLEncoder.encode(key, "utf-8").replace("+", "%20"), suffix);
 
     } catch (UnsupportedEncodingException e) {
       // e.printStackTrace();
       result = String.format("%s%s%s", prefix, bucketDomain + "/" + key, suffix);
     }
-    // System.out.println(result);
     return result;
   }
 }

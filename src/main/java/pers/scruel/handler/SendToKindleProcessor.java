@@ -9,46 +9,46 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 public class SendToKindleProcessor extends BaseProcessor {
-    private static final String TITLE = "sending";
+  private static final String TITLE = "sending";
 
-    public SendToKindleProcessor(TipsFrame tipsFrame) {
-        super(tipsFrame, SendToKindleThread.class);
-        this.setActionListener(new BaseAction(tipsFrame));
-    }
+  public SendToKindleProcessor(TipsFrame tipsFrame) {
+    super(tipsFrame, SendToKindleThread.class);
+    this.setActionListener(new BaseAction(tipsFrame));
+  }
 
-    @Override
-    void htmlProcess(String data) throws Exception {
-    }
+  @Override
+  void htmlProcess(String data) throws Exception {
+  }
 
-    @Override
-    void stringProcess(String data) throws Exception {
-    }
+  @Override
+  void stringProcess(String data) throws Exception {
+  }
 
-    @Override
-    void imageProcess(Image data) throws Exception {
-    }
+  @Override
+  void imageProcess(Image data) throws Exception {
+  }
 
-    @Override
-    void fileListProcess(List<File> data) throws Exception {
-        updateActionSum(data.size());
-        for (File file : data) {
-            if (file.getName().endsWith("azw3") || file.getName().endsWith("azw")
-                    || file.getName().endsWith("epub") || file.getName().endsWith(".mobi")) {
-                startThread(file);
-            }
-            else {
-                notifyActionSucceed();
-            }
-        }
+  @Override
+  void fileListProcess(List<File> data) throws Exception {
+    updateActionSum(data.size());
+    for (File file : data) {
+      if (file.getName().endsWith("azw3") || file.getName().endsWith("azw")
+          || file.getName().endsWith("epub") || file.getName().endsWith(".mobi")) {
+        startThread(file);
+      }
+      else {
+        notifyActionSucceed();
+      }
     }
+  }
 
-    @Override
-    String getTitle() {
-        return TITLE;
-    }
+  @Override
+  String getTitle() {
+    return TITLE;
+  }
 }
 
 

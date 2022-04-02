@@ -15,64 +15,64 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 @SuppressWarnings("unchecked")
 public class UploadProcessor extends BaseProcessor {
-    private final static String TITLE = "uploading";
+  private final static String TITLE = "uploading";
 
-    public UploadProcessor(TipsFrame tipsFrame) {
-        super(tipsFrame, UploadThread.class);
-        this.setActionListener(new PasteAction(tipsFrame));
-    }
+  public UploadProcessor(TipsFrame tipsFrame) {
+    super(tipsFrame, UploadThread.class);
+    this.setActionListener(new PasteAction(tipsFrame));
+  }
 
-    @Override
-    void htmlProcess(String data) throws Exception {
-        Document doc = Jsoup.parse(data);
-        Elements elements = doc.select("img");
-        updateActionSum(elements.size());
-        for (Element element : elements) {
-            String filePath = element.attr("src");
-            // new Thread(() -> QiNiuUtils.fileUpload(new File(filePath))).start();
-            if (filePath.matches("[a-zA-Z]:.*")) {
-                startThread(new File(filePath));
-            }
-            else if (filePath.startsWith("http")) {
-                try {
-                    startThread(new URL(filePath));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                notifyActionSucceed();
-            }
+  @Override
+  void htmlProcess(String data) throws Exception {
+    Document doc = Jsoup.parse(data);
+    Elements elements = doc.select("img");
+    updateActionSum(elements.size());
+    for (Element element : elements) {
+      String filePath = element.attr("src");
+      // new Thread(() -> QiNiuUtils.fileUpload(new File(filePath))).start();
+      if (filePath.matches("[a-zA-Z]:.*")) {
+        startThread(new File(filePath));
+      }
+      else if (filePath.startsWith("http")) {
+        try {
+          startThread(new URL(filePath));
+        } catch (MalformedURLException e) {
+          e.printStackTrace();
         }
+      }
+      else {
+        notifyActionSucceed();
+      }
     }
+  }
 
-    @Override
-    void stringProcess(String data) throws Exception {
-        if (data.startsWith("http")) {
-            startThread(new URL(data));
-        }
+  @Override
+  void stringProcess(String data) throws Exception {
+    if (data.startsWith("http")) {
+      startThread(new URL(data));
     }
+  }
 
-    @Override
-    void imageProcess(Image data) throws Exception {
-        updateActionSum(1);
-        startThread(data);
-    }
+  @Override
+  void imageProcess(Image data) throws Exception {
+    updateActionSum(1);
+    startThread(data);
+  }
 
-    @Override
-    void fileListProcess(List<File> data) throws Exception {
-        updateActionSum(data.size());
-        for (File file : data) {
-            startThread(file);
-        }
+  @Override
+  void fileListProcess(List<File> data) throws Exception {
+    updateActionSum(data.size());
+    for (File file : data) {
+      startThread(file);
     }
+  }
 
-    @Override
-    String getTitle() {
-        return TITLE;
-    }
+  @Override
+  String getTitle() {
+    return TITLE;
+  }
 }

@@ -10,45 +10,45 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author Scruel Tao <scruelt@hotmail.com>
+ * @author Scruel Tao
  */
 public class OCRProcessor extends BaseProcessor {
-    private static final String TITLE = "OCRing";
+  private static final String TITLE = "OCRing";
 
-    public OCRProcessor(TipsFrame tipsFrame) {
-        super(tipsFrame, OCRThread.class);
-        this.setActionListener(new PasteAction(tipsFrame));
-    }
+  public OCRProcessor(TipsFrame tipsFrame) {
+    super(tipsFrame, OCRThread.class);
+    this.setActionListener(new PasteAction(tipsFrame));
+  }
 
-    @Override
-    void htmlProcess(String data) throws Exception {
-    }
+  @Override
+  void htmlProcess(String data) throws Exception {
+  }
 
-    @Override
-    void stringProcess(String data) throws Exception {
-    }
+  @Override
+  void stringProcess(String data) throws Exception {
+  }
 
-    @Override
-    void imageProcess(Image data) throws Exception {
-        updateActionSum(1);
-        startThread(data);
-    }
+  @Override
+  void imageProcess(Image data) throws Exception {
+    updateActionSum(1);
+    startThread(data);
+  }
 
-    @Override
-    void fileListProcess(List<File> data) throws Exception {
-        updateActionSum(data.size());
-        for (File file : data) {
-            if (!"unknown".equals(QiNiuUtils.getImgType(file.getName()))) {
-                startThread(file);
-            }
-            else {
-                notifyActionSucceed();
-            }
-        }
+  @Override
+  void fileListProcess(List<File> data) throws Exception {
+    updateActionSum(data.size());
+    for (File file : data) {
+      if (!"unknown".equals(QiNiuUtils.getImgType(file.getName()))) {
+        startThread(file);
+      }
+      else {
+        notifyActionSucceed();
+      }
     }
+  }
 
-    @Override
-    String getTitle() {
-        return TITLE;
-    }
+  @Override
+  String getTitle() {
+    return TITLE;
+  }
 }
