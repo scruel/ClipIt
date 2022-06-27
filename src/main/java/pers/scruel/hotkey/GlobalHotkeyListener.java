@@ -10,6 +10,7 @@ import com.melloware.jintellitype.JIntellitype;
 import pers.scruel.gui.TipsFrame;
 import pers.scruel.handler.OCRProcessor;
 import pers.scruel.handler.SendToKindleProcessor;
+import pers.scruel.handler.SingleFileProcessor;
 import pers.scruel.handler.UploadProcessor;
 
 import java.io.File;
@@ -26,8 +27,7 @@ public class GlobalHotkeyListener implements HotkeyListener {
   public GlobalHotkeyListener(TipsFrame tipsFrame) {
     this.tipsFrame = tipsFrame;
     for (HotkeyType hotKey : HotkeyType.values()) {
-      JIntellitype.getInstance()
-                  .registerHotKey(hotKey.getIdentifier(), hotKey.getModifier(), hotKey.getKeycode());
+      JIntellitype.getInstance().registerHotKey(hotKey.getIdentifier(), hotKey.getModifier(), hotKey.getKeycode());
     }
     // 禁止重复运行
     try {
@@ -55,6 +55,9 @@ public class GlobalHotkeyListener implements HotkeyListener {
         break;
       case SEND_TO_KIND:
         new SendToKindleProcessor(tipsFrame).process();
+        break;
+      case SINGLE_FILE:
+        new SingleFileProcessor(tipsFrame).process();
         break;
       default:
     }
