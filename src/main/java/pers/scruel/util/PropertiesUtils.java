@@ -1,7 +1,8 @@
 package pers.scruel.util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -10,21 +11,21 @@ import java.util.Properties;
  * @author Scruel Tao
  */
 public class PropertiesUtils {
-  private static final Properties properties = new Properties();
+  private static final Properties PROPERTIES = new Properties();
   private static final String SCRUEL_TEST_PATH = "C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties";
   private static boolean loaded = false;
 
   public static Properties getProperties() throws IOException {
     if (loaded) {
-      return properties;
+      return PROPERTIES;
     }
     if (Boolean.parseBoolean(System.getenv("CLIPLT_DEBUG"))) {
-      properties.load(new FileInputStream(SCRUEL_TEST_PATH));
+      PROPERTIES.load(Files.newInputStream(Paths.get(SCRUEL_TEST_PATH)));
     }
     else {
-      properties.load(new FileInputStream("config.properties"));
+      PROPERTIES.load(Files.newInputStream(Paths.get("config.properties")));
     }
     loaded = true;
-    return properties;
+    return PROPERTIES;
   }
 }
