@@ -22,7 +22,7 @@ public class SendToKindleThread extends BaseThread {
 
   @Override
   void runWithFile(File file) throws Exception {
-    MailUtils se = new MailUtils(true);
+    MailUtils se = new MailUtils();
     String filenameWithoutExtension = file.getName();
     filenameWithoutExtension = filenameWithoutExtension.substring(0, filenameWithoutExtension.lastIndexOf("."));
     File newFile = new File(path + "\\temp\\" + filenameWithoutExtension + ".mobi");

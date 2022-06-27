@@ -12,14 +12,13 @@ import java.util.Properties;
 public class PropertiesUtils {
   private static final Properties properties = new Properties();
   private static final String SCRUEL_TEST_PATH = "C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties";
-  private static boolean debug = false;
   private static boolean loaded = false;
 
   public static Properties getProperties() throws IOException {
     if (loaded) {
       return properties;
     }
-    if (debug) {
+    if (Boolean.parseBoolean(System.getenv("CLIPLT_DEBUG"))) {
       properties.load(new FileInputStream(SCRUEL_TEST_PATH));
     }
     else {
@@ -27,9 +26,5 @@ public class PropertiesUtils {
     }
     loaded = true;
     return properties;
-  }
-
-  public static boolean isDebug() {
-    return debug;
   }
 }

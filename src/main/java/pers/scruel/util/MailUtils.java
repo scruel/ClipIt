@@ -26,15 +26,14 @@ public class MailUtils {
   /*
    * 初始化方法
    */
-  public MailUtils(boolean debug) throws GeneralSecurityException, IOException {
-    //解决中文乱码的终极方案
+  public MailUtils() throws GeneralSecurityException, IOException {
+    boolean debug = Boolean.parseBoolean(System.getenv("CLIPLT_DEBUG"));
     System.setProperty("mail.mime.splitlongparameters", "false");
     Properties properties = PropertiesUtils.getProperties();
     this.mailHost = properties.getProperty("stk.mail.smtp.host");
     this.senderUsername = properties.getProperty("stk.mail.sender.username");
     this.senderPassword = properties.getProperty("stk.mail.sender.pass");
     this.receiveUsername = properties.getProperty("stk.mail.receiver.username");
-    // 开启SSL加密，否则会失败
     properties.put("mail.smtp.ssl.enable", true);
 
     session = Session.getInstance(properties);
