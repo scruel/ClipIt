@@ -12,19 +12,17 @@ import java.util.Properties;
  */
 public class PropertiesUtils {
   private static final Properties PROPERTIES = new Properties();
-  private static final String SCRUEL_TEST_PATH = "C:\\Users\\scruel\\Desktop\\TOOL\\auto\\clipIt\\config.properties";
   private static boolean loaded = false;
 
   public static Properties getProperties() throws IOException {
     if (loaded) {
       return PROPERTIES;
     }
-    if (Boolean.parseBoolean(System.getenv("CLIPLT_DEBUG"))) {
-      PROPERTIES.load(Files.newInputStream(Paths.get(SCRUEL_TEST_PATH)));
+    String configPath = System.getenv("CLIPLT_CONFIG_PATH");
+    if (null == configPath) {
+      configPath = "config.properties";
     }
-    else {
-      PROPERTIES.load(Files.newInputStream(Paths.get("config.properties")));
-    }
+    PROPERTIES.load(Files.newInputStream(Paths.get(configPath)));
     loaded = true;
     return PROPERTIES;
   }
