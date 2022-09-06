@@ -54,8 +54,8 @@ public class QiNiuUtils {
     byte[] imgBytes = IOUtils.getImgBytes(image);
     String fname = getDateKey() + "clipboard" + ".png";
     if ("true".equals(PropertiesUtils.getProperties().getProperty("local.save"))) {
-      String pathname = PropertiesUtils.getProperties().getProperty("local.pathname").replace("\\", "\\\\");
-      File saveFile = new File(pathname + "/" + fname);
+      String path = PropertiesUtils.getProperties().getProperty("local.folder").replace("\\", "\\\\");
+      File saveFile = new File(path + "/" + fname);
       saveFile.getParentFile().mkdirs();
       try (FileOutputStream out = new FileOutputStream(saveFile)) {
         out.write(imgBytes);
