@@ -27,7 +27,7 @@ public class MailUtils {
    * 初始化方法
    */
   public MailUtils() throws GeneralSecurityException, IOException {
-    boolean debug = Boolean.parseBoolean(System.getenv("CLIPLT_EMAIL_DEBUG"));
+    boolean debug = Boolean.parseBoolean(System.getProperty("CLIPLT_EMAIL_DEBUG"));
     System.setProperty("mail.mime.splitlongparameters", "false");
     Properties properties = PropertiesUtils.getProperties();
     this.mailHost = properties.getProperty("stk.mail.smtp.host");

@@ -1,5 +1,7 @@
 package pers.scruel.util;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,7 +20,13 @@ public class PropertiesUtils {
     if (loaded) {
       return PROPERTIES;
     }
-    String configPath = System.getenv("CLIPLT_CONFIG_PATH");
+    try {
+
+      Dotenv dotenv = Dotenv.configure().load();
+      dotenv.entries().forEach(e -> System.setProperty(e.getKey(), e.getValue()));
+    } catch (Exception ignore) {
+    }
+    String configPath = System.getProperty("CLIPLT_CONFIG_PATH");
     if (null == configPath) {
       configPath = "config.properties";
     }

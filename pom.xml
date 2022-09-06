@@ -14,6 +14,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.6.0</version>
@@ -87,7 +93,7 @@
                             <finalName>${artifactId}</finalName>
                             <transformers>
                                 <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <!-- 这个是你的程序入口文件 -->
                                     <mainClass>pers.scruel.Main</mainClass>
                                 </transformer>
